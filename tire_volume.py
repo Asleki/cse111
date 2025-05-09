@@ -1,7 +1,8 @@
-#This program reads from the keyboard the three numbers for a tire and computes and outputs 
+# This program reads from the keyboard the three numbers for a tire and computes and outputs
 # the volume of space inside that tire.
 
 import math
+
 def calculate_tire_volume(width, aspect_ratio, diameter):
     """
     Calculates the approximate volume of space inside a tire.
@@ -16,9 +17,19 @@ def calculate_tire_volume(width, aspect_ratio, diameter):
     """
     v = (math.pi * width**2 * aspect_ratio * (width * aspect_ratio + 2540 * diameter)) / 10000000000
     return v
-   
-width = int(input("Enter the width: "))
-aspect_ratio = int(input("Enter the aspect ratio: "))
-diameter = int(input("Enter the diameter: "))
-volume = calculate_tire_volume(width, aspect_ratio, diameter)
-print(f"The approximate volume is {volume:.2f} liters")
+
+while True:
+    try:
+        width_str = input("Enter the width: ")
+        width = int(width_str)
+        aspect_ratio_str = input("Enter the aspect ratio: ")
+        aspect_ratio = int(aspect_ratio_str)
+        diameter_str = input("Enter the diameter: ")
+        diameter = int(diameter_str)
+        volume = calculate_tire_volume(width, aspect_ratio, diameter)
+        print(f"The approximate volume is {volume:.2f} liters")
+        break  # Exit the loop if the input is valid
+    except ValueError:
+        print("Invalid input. Please enter integer values for width, aspect ratio, and diameter.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
