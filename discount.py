@@ -1,67 +1,68 @@
 import datetime
 
-# Let's see what day of the week it is right now. Monday is 0, and it goes up to Sunday as 6.
-#(Monday=0, Tuesday=1, ..., Sunday=6)
+# Get the current day of the week (Monday is 0, Sunday is 6)
 today = datetime.datetime.now().weekday()
 
-# Gotta start our order total at zero.
+# Initialize subtotal
 subtotal = 0
+discount_applied = False  # Flag to track if a discount was applied
 
-# Alright, time to get the stuff the customer wants! We'll keep asking for items
-# until they tell us they're done by entering '0' for the quantity.
-print("Okay, let's ring up your order. Enter the quantity of each item (type '0' when finished):")
+# Loop to get price and quantity until quantity is 0
+print("Enter items for the order (enter quantity '0' when done):")
 while True:
-    # I'm gonna try to get the info for each item here...
-    # ...but if they type something that's not a number, I need to catch that!by using a try-except block.
+    # Attempt to get item input, handle non-numeric entries.
     try:
-        quantity = int(input("Quantity: "))
+        quantity = int(input("Enter quantity: "))
         if quantity == 0:
-            # Looks like they're all done adding items. Let's move on to the total.
             break
-        price = float(input("Price per item: "))
-        # Add the cost of these items to our running total.
+        price = float(input("Enter price per item: "))
         subtotal += quantity * price
-    
     except ValueError:
-        print("Hold on! Please enter a number for both the quantity and the price.")
+        print("Invalid input. Please enter a number for quantity and price.")
 
-discount_rate = 0.10  # We're giving a 10% discount.
-sales_tax_rate = 0.06  # And the sales tax is 6%.
+discount_rate = 0.10  # 10% discount
+sales_tax_rate = 0.06  # 6% sales tax
 discount_amount = 0
 total_due = 0
 
-# Let's check if it's Tuesday or Wednesday AND if their order is $50 or more.
-# That's when they get the special discount!
+# Check for Tuesday (1) or Wednesday (2) and if subtotal is $50 or greater
 if (today == 1 or today == 2) and subtotal >= 50:
-    # They get the discount! Let's calculate how much they save.
     discount_amount = subtotal * discount_rate
-    # This is what's left after we take off the discount.
     subtotal_after_discount = subtotal - discount_amount
-    # Now, let's figure out the sales tax on that discounted price.
     sales_tax_amount = subtotal_after_discount * sales_tax_rate
-    # And finally, the grand total they owe.
     total_due = subtotal_after_discount + sales_tax_amount
-    print(f"\nAwesome! You got a discount of ${discount_amount:.2f}!")
+    print(f"\nDiscount applied: ${discount_amount:.2f}")
     print(f"Subtotal after discount: ${subtotal_after_discount:.2f}")
     print(f"Sales tax (6%): ${sales_tax_amount:.2f}")
     print(f"Total amount due: ${total_due:.2f}")
-# What if it's Tuesday or Wednesday, but their order isn't quite $50 yet?
+    discount_applied = True  # Set the flag to True
 elif today == 1 or today == 2:
     amount_needed = 50 - subtotal
-    print(f"\nAlmost there for the Tuesday/Wednesday discount!")
-    print(f"You need to spend ${amount_needed:.2f} more to get 10% off.")
-    # Still gotta calculate the sales tax on what they have so far.
+    print(f"\nTo receive a 10% discount on Tuesday or Wednesday,")
+    print(f"you need to spend ${amount_needed:.2f} more.")
     sales_tax_amount = subtotal * sales_tax_rate
     total_due = subtotal + sales_tax_amount
     print(f"Subtotal: ${subtotal:.2f}")
     print(f"Sales tax (6%): ${sales_tax_amount:.2f}")
     print(f"Total amount due: ${total_due:.2f}")
-# If it's any other day, no discount today.
 else:
     sales_tax_amount = subtotal * sales_tax_rate
     total_due = subtotal + sales_tax_amount
-    print(f"\nOkay, here's the total for today:")
-    print(f"Subtotal: ${subtotal:.2f}")
+    print(f"\nSubtotal: ${subtotal:.2f}")
     print(f"Sales tax (6%): ${sales_tax_amount:.2f}")
     print(f"Total amount due: ${total_due:.2f}")
+
+# Message about whether a discount was applied
+print("\n---")
+if discount_applied:
+    print("A 10% discount was applied to your order today!")
+else:
+    print("No discount was applied to your order today.")
+    print("Remember, you can get a 10% discount on orders of $50 or more on Tuesdays and Wednesdays.")
+    
+    
+# Promotion message for future purchases
+print("\n---")
+print("Did you know? You can get a 10% discount on your order when your subtotal is $50 or more on Tuesdays and Wednesdays!")
+print("Come back and save on those days!")
 # Copyright 2025, Alex Malunda. All rights reserved.
