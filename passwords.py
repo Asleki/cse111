@@ -35,6 +35,40 @@ def word_in_file(word, filename, case_sensitive=False):
     Returns:
         bool: True if the word is found in the file, False otherwise.
     """
+    
+    
+    """
+try:
+    # Attempt to open the file specified by 'filename' in read mode ('r')
+    # using UTF-8 encoding to handle various character sets.
+    with open(filename, "r", encoding="utf-8") as file:
+        # Iterate through each line in the opened file.
+        for line in file:
+            # Remove leading/trailing whitespace (including newline characters)
+            # from the current line and store it in 'file_word'.
+            file_word = line.strip()
+            # Check if the comparison should be case-sensitive.
+            if case_sensitive:
+                # If case-sensitive, compare the input 'word' directly with
+                # the 'file_word'. If they are an exact match, return True.
+                if word == file_word:
+                    return True
+            else:
+                # If not case-sensitive, convert both the input 'word' and
+                # the 'file_word' to lowercase before comparison. If they match
+                # (ignoring case), return True.
+                if word.lower() == file_word.lower():
+                    return True
+        # If the loop completes without finding a match, return False
+        # indicating the 'word' was not found in the file.
+        return False
+except FileNotFoundError:
+    # If the file specified by 'filename' cannot be found, this block is executed.
+    # Print an error message to the console indicating the missing file.
+    print(f"Error: File '{filename}' not found.")
+    # Return False to signal that the word could not be found due to the missing file.
+    return False
+"""
     try:
         with open(filename, "r", encoding="utf-8") as file:
             for line in file:
