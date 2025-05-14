@@ -1,4 +1,4 @@
-# passwords.py
+
 # Enhancement: Provides detailed feedback on password strength,
 #              including a breakdown of character types present,
 #              suggestions for improvement, and a pass ✅/fail ❌ status
@@ -18,9 +18,10 @@ UPPER = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "
 DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 SPECIAL = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";", ":", '"', "'", ",", ".", "<", ">", "?", "/", "`", "~"]
 
-PASS_MARK = "✅"
-FAIL_MARK = "❌"
-MIN_LENGTH_THRESHOLD = 10
+
+PASS_MARK = "✅" # Constant representing the checkmark symbol for a passed requirement.
+FAIL_MARK = "❌" # Constant representing the cross symbol for a failed requirement.
+MIN_LENGTH_THRESHOLD = 10 # Constant defining the minimum acceptable length for a password.
 
 def word_in_file(word, filename, case_sensitive=False):
     """
@@ -216,3 +217,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+# Copyright 2025, Alex Malunda. All rights reserved.
