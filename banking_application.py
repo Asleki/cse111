@@ -147,6 +147,7 @@ def display_token_machine_menu():
     print("M. Go to main menu")
 
 # Function to display account details
+
 def display_account_details(account_type):
     """
     Displays the details of a selected bank account type.
