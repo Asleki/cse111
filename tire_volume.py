@@ -142,3 +142,5 @@ while True:
         print("Invalid input. Please enter integer values for width, aspect ratio, and diameter.")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+        
+# Copyright 2025. Alex Malunda. All rights reserved.
