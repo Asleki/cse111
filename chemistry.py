@@ -22,9 +22,8 @@ ATOMIC_MASS_INDEX = 1
 SYMBOL_INDEX = 0
 QUANTITY_INDEX = 1
 
-# symbol: [name, atomic_mass]
-# This function is designed to return element data in a format that might be
-# expected by an external grader (e.g., [name, atomic_mass] without atomic number).
+
+
 def make_periodic_table():
     periodic_table_dict = {
         "Ac": ["Actinium", 227],

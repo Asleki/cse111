@@ -265,3 +265,61 @@ Uses:
 
 --------------------------------------------------
 
+Time: 07:20pm
+Formula: Ru
+Name: unknown compound
+Molar Mass: 101.07000 g/mol
+Atomic Details:
+   Ru (Ruthenium), Atomic Number: 44, Quantity: 1
+Molecular Weight Breakdown:
+   Ru: 1 × 101.07000 = 101.07000
+Percent Composition:
+   Ru: 100.00%
+Uses:
+   - No specific uses found for this compound.
+
+--------------------------------------------------
+
+Time: 07:22pm
+Formula: C2H6O
+Name: ethanol
+Molar Mass: 46.06844 g/mol
+Atomic Details:
+   C (Carbon), Atomic Number: 6, Quantity: 2
+   H (Hydrogen), Atomic Number: 1, Quantity: 6
+   O (Oxygen), Atomic Number: 8, Quantity: 1
+Molecular Weight Breakdown:
+   C: 2 × 12.01070 = 24.02140
+   H: 6 × 1.00794 = 6.04764
+   O: 1 × 15.99940 = 15.99940
+Percent Composition:
+   C: 52.14%
+   H: 13.13%
+   O: 34.73%
+Uses:
+   - No specific uses found for this compound.
+
+--------------------------------------------------
+
+Time: 07:22pm
+Formula: H2O
+Name: water
+Molar Mass: 18.01528 g/mol
+Atomic Details:
+   H (Hydrogen), Atomic Number: 1, Quantity: 2
+   O (Oxygen), Atomic Number: 8, Quantity: 1
+Molecular Weight Breakdown:
+   H: 2 × 1.00794 = 2.01588
+   O: 1 × 15.99940 = 15.99940
+Percent Composition:
+   H: 11.19%
+   O: 88.81%
+Uses:
+   - Solvent
+   - Coolant
+   - Cleaning
+   - Transport in biology
+   - Chemical reactions
+
+--------------------------------------------------
+
