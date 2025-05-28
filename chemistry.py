@@ -14,12 +14,11 @@
 from formula import parse_formula
 from datetime import datetime
 
-# Index constants for the lists stored in the periodic_table_dict.
-# Assumes periodic_table_dict values are of the form [name, atomic_mass]
+
 NAME_INDEX = 0
 ATOMIC_MASS_INDEX = 1
 
-# These are for the tuples returned by parse_formula, not for periodic_table_dict lists
+
 SYMBOL_INDEX = 0
 QUANTITY_INDEX = 1
 
@@ -125,8 +124,7 @@ def make_periodic_table():
     }
     return periodic_table_dict
 
-# This new function provides a lookup for atomic numbers, separate from
-# make_periodic_table to maintain compatibility with specific grader expectations.
+
 def make_atomic_numbers_lookup():
     atomic_numbers_dict = {
         "Ac": 89, "Ag": 47, "Al": 13, "Ar": 18, "As": 33, "At": 85, "Au": 79, "B": 5,
@@ -173,8 +171,7 @@ def compute_molar_mass(symbol_quantity_list, periodic_table_dict):
             atomic_mass = periodic_table_dict[symbol][ATOMIC_MASS_INDEX]
             total_molar_mass += atomic_mass * quantity
         else:
-            # This should ideally not happen if parse_formula is robust,
-            # but it's good for robustness.
+            
             raise ValueError(f"Unknown element symbol: {symbol}")
     return total_molar_mass
 
@@ -290,7 +287,7 @@ def main():
             print(f"   {symbol} ({element_name}) - Atomic Number: {atomic_number}, Quantity: {qty}")
 
         print("\nMolecular Weight Breakdown:")
-        for sym, qty, atom_mass, total_mass in breakdown: # Renamed 'mass' to 'atom_mass' for clarity
+        for sym, qty, atom_mass, total_mass in breakdown: 
             print(f"   {sym}: {qty} × {atom_mass:.5f} = {total_mass:.5f}")
 
         print("\nPercent Composition by Mass:")
