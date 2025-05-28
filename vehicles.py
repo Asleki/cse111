@@ -22,14 +22,14 @@ def main():
     vin = input("Please enter a VIN: ")
 
     # Check if the vin is a key that is in the vehicles dictionary.
-    if pass:
+    if vin in vehicles_dict:
 
         # Find the data for the vehicle that the user wants.
-        pass
+        vehicle = vehicles_dict[vin]
 
         # Print the manufacturer, model, and color of the vehicle.
         # Don't print the year, engine design, or displacement.
-        pass
+        print(f"{vehicle[MANUFACTURER_INDEX]} {vehicle[MODEL_INDEX]} {vehicle[COLOR_INDEX]}")
 
     else:
         # Print a message stating that the VIN entered

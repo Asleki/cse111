@@ -1,0 +1,267 @@
+Time: 04:44pm
+Formula: H2O
+Name: water
+Mass: 18.01528 g/mol
+Atomic Details:
+  H (Hydrogen), Atomic Number: 1, Quantity: 2
+  O (Oxygen), Atomic Number: 8, Quantity: 1
+Molecular Weight Breakdown:
+  H: 2 × 1.00794 = 2.01588
+  O: 1 × 15.99940 = 15.99940
+Percent Composition:
+  H: 11.19%
+  O: 88.81%
+Uses:
+  - Solvent
+  - Coolant
+  - Cleaning
+  - Transport
+  - Reactions
+
+--------------------------------------------------
+
+Time: 04:44pm
+Formula: C3H8O
+Name: isopropyl alcohol
+Mass: 60.09502 g/mol
+Atomic Details:
+  C (Carbon), Atomic Number: 6, Quantity: 3
+  H (Hydrogen), Atomic Number: 1, Quantity: 8
+  O (Oxygen), Atomic Number: 8, Quantity: 1
+Molecular Weight Breakdown:
+  C: 3 × 12.01070 = 36.03210
+  H: 8 × 1.00794 = 8.06352
+  O: 1 × 15.99940 = 15.99940
+Percent Composition:
+  C: 59.96%
+  H: 13.42%
+  O: 26.62%
+Uses:
+  - Sanitizer
+  - Solvent
+  - Cleaner
+  - Fuel
+  - Preservative
+
+--------------------------------------------------
+
+Time: 04:47pm
+Formula: CH3(CH2)6CH3
+Name: octane
+Mass: 114.22852 g/mol
+Atomic Details:
+  C (Carbon), Atomic Number: 6, Quantity: 8
+  H (Hydrogen), Atomic Number: 1, Quantity: 18
+Molecular Weight Breakdown:
+  C: 8 × 12.01070 = 96.08560
+  H: 18 × 1.00794 = 18.14292
+Percent Composition:
+  C: 84.12%
+  H: 15.88%
+Uses:
+  - Fuel
+  - Solvent
+  - Hydrocarbon research
+  - Combustion studies
+  - Petrochemicals
+
+--------------------------------------------------
+
+Time: 04:54pm
+Formula: CH3(CH2)6CH3
+Name: octane
+Mass: 114.22852 g/mol
+Atomic Details:
+  C (Carbon), Atomic Number: 6, Quantity: 8
+  H (Hydrogen), Atomic Number: 1, Quantity: 18
+Molecular Weight Breakdown:
+  C: 8 × 12.01070 = 96.08560
+  H: 18 × 1.00794 = 18.14292
+Percent Composition:
+  C: 84.12%
+  H: 15.88%
+Uses:
+  - Fuel
+  - Solvent
+  - Hydrocarbon research
+  - Combustion studies
+  - Petrochemicals
+
+--------------------------------------------------
+
+Time: 04:55pm
+Formula: CH3(CH2)6CH3
+Name: octane
+Mass: 114.22852 g/mol
+Atomic Details:
+  C (Carbon), Atomic Number: 6, Quantity: 8
+  H (Hydrogen), Atomic Number: 1, Quantity: 18
+Molecular Weight Breakdown:
+  C: 8 × 12.01070 = 96.08560
+  H: 18 × 1.00794 = 18.14292
+Percent Composition:
+  C: 84.12%
+  H: 15.88%
+Uses:
+  - Fuel
+  - Solvent
+  - Hydrocarbon research
+  - Combustion studies
+  - Petrochemicals
+
+--------------------------------------------------
+
+Time: 04:55pm
+Formula: CH3(CH2)6CH3
+Name: octane
+Mass: 114.22852 g/mol
+Atomic Details:
+  C (Carbon), Atomic Number: 6, Quantity: 8
+  H (Hydrogen), Atomic Number: 1, Quantity: 18
+Molecular Weight Breakdown:
+  C: 8 × 12.01070 = 96.08560
+  H: 18 × 1.00794 = 18.14292
+Percent Composition:
+  C: 84.12%
+  H: 15.88%
+Uses:
+  - Fuel
+  - Solvent
+  - Hydrocarbon research
+  - Combustion studies
+  - Petrochemicals
+
+--------------------------------------------------
+
+Time: 04:57pm
+Formula: Ta
+Name: unknown compound
+Mass: 180.94788 g/mol
+Atomic Details:
+  Ta (Tantalum), Atomic Number: 73, Quantity: 1
+Molecular Weight Breakdown:
+  Ta: 1 × 180.94788 = 180.94788
+Percent Composition:
+  Ta: 100.00%
+Uses:
+  - Use 1
+  - Use 2
+  - Use 3
+  - Use 4
+  - Use 5
+
+--------------------------------------------------
+
+Time: 04:57pm
+Formula: Ta
+Name: unknown compound
+Mass: 180.94788 g/mol
+Atomic Details:
+  Ta (Tantalum), Atomic Number: 73, Quantity: 1
+Molecular Weight Breakdown:
+  Ta: 1 × 180.94788 = 180.94788
+Percent Composition:
+  Ta: 100.00%
+Uses:
+  - Use 1
+  - Use 2
+  - Use 3
+  - Use 4
+  - Use 5
+
+--------------------------------------------------
+
+Time: 04:58pm
+Formula: C2H5OH
+Name: ethanol
+Mass: 46.06844 g/mol
+Atomic Details:
+  C (Carbon), Atomic Number: 6, Quantity: 2
+  H (Hydrogen), Atomic Number: 1, Quantity: 6
+  O (Oxygen), Atomic Number: 8, Quantity: 1
+Molecular Weight Breakdown:
+  C: 2 × 12.01070 = 24.02140
+  H: 6 × 1.00794 = 6.04764
+  O: 1 × 15.99940 = 15.99940
+Percent Composition:
+  C: 52.14%
+  H: 13.13%
+  O: 34.73%
+Uses:
+  - Disinfectant
+  - Fuel
+  - Solvent
+  - Beverages
+  - Antiseptic
+
+--------------------------------------------------
+
+Time: 04:59pm
+Formula: C2H5OH
+Name: ethanol
+Mass: 46.06844 g/mol
+Atomic Details:
+  C (Carbon), Atomic Number: 6, Quantity: 2
+  H (Hydrogen), Atomic Number: 1, Quantity: 6
+  O (Oxygen), Atomic Number: 8, Quantity: 1
+Molecular Weight Breakdown:
+  C: 2 × 12.01070 = 24.02140
+  H: 6 × 1.00794 = 6.04764
+  O: 1 × 15.99940 = 15.99940
+Percent Composition:
+  C: 52.14%
+  H: 13.13%
+  O: 34.73%
+Uses:
+  - Disinfectant
+  - Fuel
+  - Solvent
+  - Beverages
+  - Antiseptic
+
+--------------------------------------------------
+
+Time: 05:00pm
+Formula: CH3(CH2)6CH3
+Name: octane
+Mass: 114.22852 g/mol
+Atomic Details:
+  C (Carbon), Atomic Number: 6, Quantity: 8
+  H (Hydrogen), Atomic Number: 1, Quantity: 18
+Molecular Weight Breakdown:
+  C: 8 × 12.01070 = 96.08560
+  H: 18 × 1.00794 = 18.14292
+Percent Composition:
+  C: 84.12%
+  H: 15.88%
+Uses:
+  - Fuel
+  - Solvent
+  - Hydrocarbon research
+  - Combustion studies
+  - Petrochemicals
+
+--------------------------------------------------
+
+Time: 06:56pm
+Formula: CH3(CH2)6CH3
+Name: octane
+Molar Mass: 114.22852 g/mol
+Atomic Details:
+   C (Carbon), Atomic Number: 6, Quantity: 8
+   H (Hydrogen), Atomic Number: 1, Quantity: 18
+Molecular Weight Breakdown:
+   C: 8 × 12.01070 = 96.08560
+   H: 18 × 1.00794 = 18.14292
+Percent Composition:
+   C: 84.12%
+   H: 15.88%
+Uses:
+   - Fuel
+   - Solvent
+   - Hydrocarbon research
+   - Combustion studies
+   - Petrochemicals
+
+--------------------------------------------------
+
