@@ -19,3 +19,27 @@ Your opinion matters to us!
 Sincerely,
 The Inkom Emporium Team
 ----------------------------
+
+--- New Email ---
+Date and Time: 2025-06-03 21:46:00
+To: alexmalunda@icloud.com
+From: no-reply@lafamiliabank.com
+Subject: Your La Familia Bank Account Application Form
+Bank: La Familia Bank - Your Trusted Financial Partner
+
+Dear Customer,
+
+We appreciate your interest in starting a financial journey with La Familia Bank.
+
+Attached to this email is your application form. Please download it, fill it carefully,
+and then scan the completed copy back to us.
+
+You can download the form from this simulated link:
+[Simulated Download Link: La Familia Bank_Application_Form.pdf]
+
+We look forward to welcoming you to the La Familia Bank family!
+
+
+Sincerely,
+The La Familia Bank Team
+--------------------

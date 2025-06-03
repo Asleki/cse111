@@ -43,12 +43,6 @@ OUR_BRANCHES = [
     "La Familia Kisumu Branch"
 ]
 
-# Mappings for string choices to numbers
-NATIONALITY_OPTIONS = ["Kenyan", "Ugandan", "Tanzanian"]
-REASON_OPTIONS = ["Regular transactions", "Savings", "For Business", "Oversea Bank Transactions"]
-OCCUPATION_OPTIONS = ["Student", "Employed", "Self-employed"]
-SOURCE_OF_INCOME_OPTIONS = ["Salary", "Savings", "Business", "Sponsorship", "Family and Relatives"]
-
 # --- Helper Functions for Data Persistence ---
 
 def read_accounts():
@@ -1054,19 +1048,14 @@ def create_account():
     if name == 'M' or name == 'P': return name
     if name is None: return None
 
-    # Nationality selection
-    print("\nSelect your nationality:")
-    for i, option in enumerate(NATIONALITY_OPTIONS, 1):
-        print(f"{i}. {option}")
-    nationality_choice = get_user_input(f"Enter choice (1-{len(NATIONALITY_OPTIONS)}): ", int)
-    if nationality_choice == 'M' or nationality_choice == 'P': return nationality_choice
-    if nationality_choice is None: return None
-    while not (1 <= nationality_choice <= len(NATIONALITY_OPTIONS)):
-        print(f"{RED_X} Invalid choice. Please enter a number between 1 and {len(NATIONALITY_OPTIONS)}.")
-        nationality_choice = get_user_input(f"Enter choice (1-{len(NATIONALITY_OPTIONS)}): ", int)
-        if nationality_choice == 'M' or nationality_choice == 'P': return nationality_choice
-        if nationality_choice is None: return None
-    nationality = NATIONALITY_OPTIONS[nationality_choice - 1]
+    nationality = get_user_input("Enter your nationality (Kenyan, Ugandan, Tanzanian): ").capitalize()
+    if nationality == 'M' or nationality == 'P': return nationality
+    if nationality is None: return None
+    while nationality not in ["Kenyan", "Ugandan", "Tanzanian"]:
+        print(f"{RED_X} Invalid nationality. Please enter Kenyan, Ugandan, or Tanzanian.")
+        nationality = get_user_input("Enter your nationality (Kenyan, Ugandan, Tanzanian): ").capitalize()
+        if nationality == 'M' or nationality == 'P': return nationality
+        if nationality is None: return None
 
     country_code = "+254" if nationality == "Kenyan" else "+256" if nationality == "Ugandan" else "+255"
     phone_number = get_user_input(f"Enter your phone number (e.g., 712345678 for Kenyan): ")
@@ -1079,8 +1068,9 @@ def create_account():
     while not is_valid_email(email):
         print(f"{RED_X} Invalid email address. Please enter a valid email.")
         email = get_user_input("Enter your email address: ")
-        if email == 'M' or email == 'P': return email
+        if email == 'M' or email == 'P': break # Allow breaking from validation loop
         if email is None: return None
+    if email == 'M' or email == 'P': return email # If loop broke due to M/P, propagate
 
     kra_pin = get_user_input("Enter your KRA PIN (e.g., A12345B): ")
     if kra_pin == 'M' or kra_pin == 'P': return kra_pin
@@ -1088,50 +1078,39 @@ def create_account():
     while not is_valid_kra_pin(kra_pin):
         print(f"{RED_X} Invalid KRA PIN. Please enter a valid KRA PIN (e.g., A12345B).")
         kra_pin = get_user_input("Enter your KRA PIN: ")
-        if kra_pin == 'M' or kra_pin == 'P': return kra_pin
+        if kra_pin == 'M' or kra_pin == 'P': break # Allow breaking from validation loop
         if kra_pin is None: return None
+    if kra_pin == 'M' or kra_pin == 'P': return kra_pin # If loop broke due to M/P, propagate
     
-    # Reason for opening account selection
-    print("\nSelect the reason for opening a bank account:")
-    for i, option in enumerate(REASON_OPTIONS, 1):
-        print(f"{i}. {option}")
-    reason_choice = get_user_input(f"Enter choice (1-{len(REASON_OPTIONS)}): ", int)
-    if reason_choice == 'M' or reason_choice == 'P': return reason_choice
-    if reason_choice is None: return None
-    while not (1 <= reason_choice <= len(REASON_OPTIONS)):
-        print(f"{RED_X} Invalid choice. Please enter a number between 1 and {len(REASON_OPTIONS)}.")
-        reason_choice = get_user_input(f"Enter choice (1-{len(REASON_OPTIONS)}): ", int)
-        if reason_choice == 'M' or reason_choice == 'P': return reason_choice
-        if reason_choice is None: return None
-    reason = REASON_OPTIONS[reason_choice - 1]
+    reason = get_user_input("Enter the reason for opening a bank account (Regular transactions, Savings, For Business, Oversea Bank Transactions): ")
+    if reason == 'M' or reason == 'P': return reason
+    if reason is None: return None
+    while reason not in ["Regular transactions", "Savings", "For Business", "Oversea Bank Transactions"]:
+        print(f"{RED_X} Invalid reason. Please select from the list.")
+        reason = get_user_input("Enter the reason for opening a bank account (Regular transactions, Savings, For Business, Oversea Bank Transactions): ")
+        if reason == 'M' or reason == 'P': break
+        if reason is None: return None
+    if reason == 'M' or reason == 'P': return reason
 
-    # Occupation selection
-    print("\nSelect your occupation:")
-    for i, option in enumerate(OCCUPATION_OPTIONS, 1):
-        print(f"{i}. {option}")
-    occupation_choice = get_user_input(f"Enter choice (1-{len(OCCUPATION_OPTIONS)}): ", int)
-    if occupation_choice == 'M' or occupation_choice == 'P': return occupation_choice
-    if occupation_choice is None: return None
-    while not (1 <= occupation_choice <= len(OCCUPATION_OPTIONS)):
-        print(f"{RED_X} Invalid choice. Please enter a number between 1 and {len(OCCUPATION_OPTIONS)}.")
-        occupation_choice = get_user_input(f"Enter choice (1-{len(OCCUPATION_OPTIONS)}): ", int)
-        if occupation_choice == 'M' or occupation_choice == 'P': return occupation_choice
-        if occupation_choice is None: return None
-    occupation = OCCUPATION_OPTIONS[occupation_choice - 1]
+    occupation = get_user_input("Enter your occupation (Student, Employed, Self-employed): ")
+    if occupation == 'M' or occupation == 'P': return occupation
+    if occupation is None: return None
+    while occupation not in ["Student", "Employed", "Self-employed"]:
+        print(f"{RED_X} Invalid occupation. Please select from the list.")
+        occupation = get_user_input("Enter your occupation (Student, Employed, Self-employed): ")
+        if occupation == 'M' or occupation == 'P': break
+        if occupation is None: return None
+    if occupation == 'M' or occupation == 'P': return occupation
 
-    # Source of income selection
-    print("\nSelect your source of income:")
-    for i, option in enumerate(SOURCE_OF_INCOME_OPTIONS, 1):
-        print(f"{i}. {option}")
-    source_of_income_choice = get_user_input(f"Enter choice (1-{len(SOURCE_OF_INCOME_OPTIONS)}): ", int)
-    if source_of_income_choice == 'M' or source_of_income_choice == 'P': return source_of_income_choice
-    if source_of_income_choice is None: return None
-    while not (1 <= source_of_income_choice <= len(SOURCE_OF_INCOME_OPTIONS)):
-        print(f"{RED_X} Invalid choice. Please enter a number between 1 and {len(SOURCE_OF_INCOME_OPTIONS)}.")
-        source_of_income_choice = get_user_input(f"Enter choice (1-{len(SOURCE_OF_INCOME_OPTIONS)}): ", int)
-        if source_of_income_choice == 'M' or source_of_income_choice == 'P': return source_of_income_choice
-        if source_of_income_choice is None: return None
-    source_of_income = SOURCE_OF_INCOME_OPTIONS[source_of_income_choice - 1]
+    source_of_income = get_user_input("Enter your source of income (Salary, Savings, Business, Sponsorship, Family and Relatives): ")
+    if source_of_income == 'M' or source_of_income == 'P': return source_of_income
+    if source_of_income is None: return None
+    while source_of_income not in ["Salary", "Savings", "Business", "Sponsorship", "Family and Relatives"]:
+        print(f"{RED_X} Invalid source of income. Please select from the list.")
+        source_of_income = get_user_input("Enter your source of income (Salary, Savings, Business, Sponsorship, Family and Relatives): ")
+        if source_of_income == 'M' or source_of_income == 'P': break
+        if source_of_income is None: return None
+    if source_of_income == 'M' or source_of_income == 'P': return source_of_income
     
     monthly_deposits = get_user_input("Enter number of monthly deposits: ", int)
     if monthly_deposits == 'M' or monthly_deposits == 'P': return monthly_deposits
@@ -1143,8 +1122,9 @@ def create_account():
     while monthly_withdrawals > monthly_deposits:
         print(f"{RED_X} Withdrawals should not be more than deposits. Please enter again.")
         monthly_withdrawals = get_user_input("Enter number of monthly withdrawals: ", int)
-        if monthly_withdrawals == 'M' or monthly_withdrawals == 'P': return monthly_withdrawals
+        if monthly_withdrawals == 'M' or monthly_withdrawals == 'P': break
         if monthly_withdrawals is None: return None
+    if monthly_withdrawals == 'M' or monthly_withdrawals == 'P': return monthly_withdrawals
     
     monthly_balance = get_user_input("Enter monthly balance you intend to maintain: ", float)
     if monthly_balance == 'M' or monthly_balance == 'P': return monthly_balance
@@ -1157,14 +1137,15 @@ def create_account():
     print("\nOur Bank Branches:")
     for i, branch in enumerate(OUR_BRANCHES, 1):
         print(f"{i}. {branch}")
-    branch_choice = get_user_input(f"Select your bank branch (1-{len(OUR_BRANCHES)}): ", int)
+    branch_choice = get_user_input("Select your bank branch: ", int)
     if branch_choice == 'M' or branch_choice == 'P': return branch_choice
     if branch_choice is None: return None
     while not 1 <= branch_choice <= len(OUR_BRANCHES):
         print(f"{RED_X} Invalid branch choice. Please select from the list.")
-        branch_choice = get_user_input(f"Select your bank branch (1-{len(OUR_BRANCHES)}): ", int)
-        if branch_choice == 'M' or branch_choice == 'P': return branch_choice
+        branch_choice = get_user_input("Select your bank branch: ", int)
+        if branch_choice == 'M' or branch_choice == 'P': break
         if branch_choice is None: return None
+    if branch_choice == 'M' or branch_choice == 'P': return branch_choice
     my_branch = OUR_BRANCHES[branch_choice - 1]
 
     # OTP verification
@@ -1286,7 +1267,7 @@ def run_banking_app():
                     current_username = username
                     # No need to load all user_data into a global, access via accounts_data[current_username]["details"]
                 else:
-                    print(f"{RED_X} Invalid username or password. Please try again.")
+                    print(f"\n{RED_X} Invalid username or password. Please try again.")
                 input("Press Enter to continue...")
             elif choice == 4: # Exit program
                 print("\nThank you for using the Python Bank Simulation. Goodbye!")
