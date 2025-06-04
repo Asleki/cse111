@@ -1,13 +1,64 @@
 
+--- New Email ---
+Date: 2025-06-04
+Time: 03:21:17
+From: noreply@pythonbank.com
+To: aleexmalunda@icoud.com
+Subject: Your Python Bank OTP for Account Registration
+
+Dear Alex Malunda,
+
+Your One-Time Password (OTP) for Python Bank account registration is: 949115
+This OTP is valid for 5 minutes and will expire at 03:26:17.
+Please do not share this OTP with anyone.
+
+Thank you for choosing Python Bank - Your Future, Our Priority
+-------------------
+
+--- New Email ---
+Date: 2025-06-04
+Time: 03:22:16
+From: noreply@pythonbank.com
+To: aleexmalunda@icoud.com
+Subject: Python Bank Security Questions Setup Confirmation
+
+Dear Alex Malunda,
+
+This is to confirm that your security questions have been successfully set up for your Python Bank account.
+These questions will help you reset your password or username if needed.
+
+Your selected security questions are:
+- What was your first pet's name?
+- What was your best sport in primary school?
+
+Thank you for enhancing the security of your account with Python Bank - Your Future, Our Priority
+-------------------
+
+--- New Email ---
+Date: 2025-06-04
+Time: 09:12:13
+From: noreply@pythonbank.com
+To: alexmalunda@icloud.com
+Subject: Python Bank Account Application Form
+
+Dear Customer,
+
+We appreciate your interest in starting a financial journey with us.
+Attached to this email is your application form. Please download it, fill it carefully, 
+and then scan the signed copy back to us.
+
+Thank you for choosing Python Bank - Your Future, Our Priority
+-------------------
+
 --- New Email for Malunda (Service Review) ---
-Date and Time: 2025-06-03 21:00:38
+Date and Time: 2025-06-04 09:22:17
 To: placeholder@example.com
 From: Inkom Emporium <feedback@inkom.com>
-Subject: How Was Your Inkom Emporium Experience (Order #KER3436189)?
+Subject: How Was Your Inkom Emporium Experience (Order #KER5993498)?
 
 Dear Malunda,
 
-Thank you for your recent purchase (Order #KER3436189) at Inkom Emporium!
+Thank you for your recent purchase (Order #KER5993498) at Inkom Emporium!
 
 We hope you enjoyed your shopping experience. We'd love to hear your feedback
 so we can continue to improve our services.
@@ -19,27 +70,3 @@ Your opinion matters to us!
 Sincerely,
 The Inkom Emporium Team
 ----------------------------
-
---- New Email ---
-Date and Time: 2025-06-03 21:46:00
-To: alexmalunda@icloud.com
-From: no-reply@lafamiliabank.com
-Subject: Your La Familia Bank Account Application Form
-Bank: La Familia Bank - Your Trusted Financial Partner
-
-Dear Customer,
-
-We appreciate your interest in starting a financial journey with La Familia Bank.
-
-Attached to this email is your application form. Please download it, fill it carefully,
-and then scan the completed copy back to us.
-
-You can download the form from this simulated link:
-[Simulated Download Link: La Familia Bank_Application_Form.pdf]
-
-We look forward to welcoming you to the La Familia Bank family!
-
-
-Sincerely,
-The La Familia Bank Team
---------------------

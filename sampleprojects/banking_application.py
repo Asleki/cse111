@@ -5,7 +5,7 @@ import os
 import time
 
 # --- Constants and Global Variables ---
-BANK_NAME = "Python Bank"
+BANK_NAME = "La Familia Bank" # Modified: Bank Name
 BANK_TAGLINE = "Your Future, Our Priority"
 RED_X = "❌"
 GREEN_CHECKMARK = "✅"
@@ -153,15 +153,15 @@ def send_account_activation_email(username, email, account_number, account_type_
             f.write(f"\nDear {username},\n\n")
             f.write(f"Congratulations! Your {BANK_NAME} account has been successfully activated.\n\n")
             f.write(f"Here are your account details:\n")
-            f.write(f"  Account Holder: {username}\n")
-            f.write(f"  Account Number: {account_number}\n")
-            f.write(f"  Account Type: {account_type_details.get('Account Name', 'N/A')}\n")
-            f.write(f"  Branch: {branch}\n\n")
+            f.write(f"   Account Holder: {username}\n")
+            f.write(f"   Account Number: {account_number}\n")
+            f.write(f"   Account Type: {account_type_details.get('Account Name', 'N/A')}\n")
+            f.write(f"   Branch: {branch}\n\n")
             
             f.write(f"Features of your {account_type_details.get('Account Name', 'N/A')}:\n")
             for key, value in account_type_details.items():
                 if key not in ["Account Name"]: # Avoid re-printing
-                    f.write(f"  - {key.replace('_', ' ').title()}: {value}\n")
+                    f.write(f"   - {key.replace('_', ' ').title()}: {value}\n")
             
             f.write(f"\nWe are thrilled to have you as part of the {BANK_NAME} family. Enjoy seamless banking with us!\n")
             f.write(f"For any queries, please do not reply to this email. Contact our customer support directly.\n\n")
@@ -223,12 +223,12 @@ Dear {username},
 This is to confirm a successful deposit into your {BANK_NAME} account.
 
 Transaction Details:
-  Reference Number: {reference_number}
-  Date & Time: {timestamp}
-  Bank Account Number: {bank_account_number}
-  Amount Deposited: KES {amount:,.2f}
-  Payment Method: {payment_method}
-  Current Bank Account Balance: KES {balance_after_deposit:,.2f}
+    Reference Number: {reference_number}
+    Date & Time: {timestamp}
+    Bank Account Number: {bank_account_number}
+    Amount Deposited: KES {amount:,.2f}
+    Payment Method: {payment_method}
+    Current Bank Account Balance: KES {balance_after_deposit:,.2f}
 
 Thank you for banking with {BANK_NAME} - {BANK_TAGLINE}
 -------------------------------
@@ -424,6 +424,13 @@ def deposit(username):
         selected_method['balance'] -= amount_to_deposit # Deduct from payment method
         accounts_data[username]["balance"] += converted_amount # Add to bank account
         
+        # Check and update account status if it was "Activation needed"
+        if user_details.get('account_status') == 'Activation needed':
+            initial_balance_needed = user_details.get('account_type_features', {}).get('Opening balance', 0.0)
+            if accounts_data[username]['balance'] >= initial_balance_needed:
+                user_details['account_status'] = 'Active'
+                print(f"{GREEN_CHECKMARK} Your account is now fully Active!")
+        
         save_accounts(accounts_data) # Save updated payment method balance and bank account balance
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         save_transaction(timestamp, username, "deposit", converted_amount, f"Deposit of {bank_account_currency} {converted_amount:.2f} from {selected_method['name']}")
@@ -459,6 +466,13 @@ def withdraw(username):
         print(f"{RED_X} Account not found.")
         return 'P' # Go back to previous menu
     
+    # Check if account is active
+    user_details = accounts_data[username]["details"]
+    if user_details.get('account_status') != 'Active':
+        print(f"{RED_X} Your account is not active. Status: {user_details.get('account_status')}. Cannot withdraw.")
+        input("Press Enter to continue...")
+        return 'P'
+
     while True:
         amount = get_user_input("Enter amount to withdraw: ", float)
         if amount == 'M': return 'M'
@@ -537,8 +551,57 @@ def display_atm_locations():
 
 # --- Menu Display Functions ---
 
+def get_time_greeting():
+    """Returns a time-based greeting (Good morning, afternoon, evening)."""
+    current_hour = datetime.datetime.now().hour
+    if 5 <= current_hour < 12:
+        return "Good morning"
+    elif 12 <= current_hour < 18:
+        return "Good afternoon"
+    else:
+        return "Good evening"
+
+def display_home_screen(username):
+    """
+    Displays the new home screen with dynamic greetings, account details,
+    and the new menu structure.
+    """
+    accounts_data = read_accounts()
+    user_details = accounts_data[username]["details"]
+    account_type = user_details.get('account_type_name', 'N/A')
+    account_status = user_details.get('account_status', 'N/A')
+    balance = accounts_data[username]['balance']
+    currency = user_details.get('account_type_features', {}).get('Currency', 'KES')
+
+    print("\n" + "=" * 50)
+    print("Welcome To La Familia Bank.".center(50))
+    print("=" * 50)
+    print(f"{get_time_greeting()}, {username}!".center(50))
+    print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}".center(50))
+    print(f"Account Type: {account_type} | Status: {account_status}".center(50))
+    print("-" * 50)
+    # Display balance on the left, aligned
+    print(f"Balance: {currency} {balance:,.2f}".ljust(50)) 
+    print("-" * 50)
+    print("HOME SCREEN MENU".center(50))
+    print("=" * 50)
+    print("1. Transfers")
+    print("2. Payments")
+    print("3. My Card")
+    print("4. Service Requests")
+    print("5. Insurance")
+    print("6. Apply for Products")
+    print("7. How To Fund My Account")
+    print("8. Currency Converter")
+    print("9. Locate")
+    print("10. Settings")
+    print("11. About")
+    print("12. Log Out")
+    print("-" * 50)
+
+
 def display_main_menu(logged_in_status):
-    """Displays the main menu options to the user."""
+    """Displays the main menu options to the user when not logged in."""
     print("\n" + "=" * 50)
     print(f"{BANK_NAME} - {BANK_TAGLINE}".center(50))
     print("=" * 50)
@@ -546,8 +609,8 @@ def display_main_menu(logged_in_status):
     print("=" * 50)
     print("1. Open A bank account")
     print("2. Explore our offers")
-    if logged_in_status:
-        print("3. Account Services")
+    if logged_in_status: # This branch will now mostly be handled by display_home_screen
+        print("3. Account Services") 
         print("4. Logout")
     else:
         print("3. Login to your account")
@@ -662,22 +725,22 @@ def get_account_type_details(account_type_choice):
         dict: A dictionary of account details, or None if invalid type.
     """
     if account_type_choice == 1:
-        return {"Account Name": "Current Bank account", "Currency": "Ksh", "Opening balance": 0, "Monthly maintenance fee": 0,
-                   "Minimum balance": 0, "Bank Transfers fees": 0.5, "ATM withdrawal charges": 0.3,
-                   "Free monthly e-statements": True, "Debit card": "5"}
+        return {"Account Name": "Current Bank account", "Currency": "KES", "Opening balance": 0, "Monthly maintenance fee": 0,
+                        "Minimum balance": 0, "Bank Transfers fees": 0.5, "ATM withdrawal charges": 0.3,
+                        "Free monthly e-statements": True, "Debit card": "5"}
     elif account_type_choice == 2:
-        return {"Account Name": "Club Account", "Currency": "Ksh", "Opening balance": 59, "Monthly maintenance fee": 12,
-                   "Minimum balance": 0, "Bank Transfers fees": 0.5, "ATM withdrawal charges": 0.3,
-                   "Free monthly e-statements": True, "Free Debit MasterCard": True, "Free Cheque book": True}
+        return {"Account Name": "Club Account", "Currency": "KES", "Opening balance": 59, "Monthly maintenance fee": 12,
+                        "Minimum balance": 0, "Bank Transfers fees": 0.5, "ATM withdrawal charges": 0.3,
+                        "Free monthly e-statements": True, "Free Debit MasterCard": True, "Free Cheque book": True}
     elif account_type_choice == 3:
-        return {"Account Name": "PayGo account", "Currency": "Ksh", "Opening balance": 0, "Monthly maintenance fee": 0,
-                   "Minimum balance": 0, "Bank Transfers fees": 0.5, "ATM withdrawal charges": 0.3,
-                   "Free monthly e-statements": True, "Free Debit MasterCard": True, "Free Cheque book": True}
+        return {"Account Name": "PayGo account", "Currency": "KES", "Opening balance": 0, "Monthly maintenance fee": 0,
+                        "Minimum balance": 0, "Bank Transfers fees": 0.5, "ATM withdrawal charges": 0.3,
+                        "Free monthly e-statements": True, "Free Debit MasterCard": True, "Free Cheque book": True}
     elif account_type_choice == 4:
         return {"Account Name": "Sapphire Multi currency account", "Currency": "USD", "Opening balance": 100,
-                   "Monthly maintenance fee": 0, "Minimum balance": 0, "Bank Transfers fees": 0.5,
-                   "ATM withdrawal charges": 0.3, "Free monthly e-statements": True, "Free Debit MasterCard": True,
-                   "Free Cheque book": True}
+                        "Monthly maintenance fee": 0, "Minimum balance": 0, "Bank Transfers fees": 0.5,
+                        "ATM withdrawal charges": 0.3, "Free monthly e-statements": True, "Free Debit MasterCard": True,
+                        "Free Cheque book": True}
     else:
         return None
 
@@ -706,7 +769,7 @@ def display_card_details_info(card_type, specific_card=None):
     Args:
         card_type (int): The card type (1: Debit, 2: Prepaid, 3: Credit).
         specific_card (int, optional): The specific card selected by the user.
-                                      Defaults to None.
+                                        Defaults to None.
     Returns:
         dict: A dictionary of card details, or None if invalid.
     """
@@ -784,7 +847,7 @@ def display_atm_locations_menu():
     print("-" * 50)
 
 def display_account_services_menu():
-    """Displays the menu for account services."""
+    """Displays the menu for account services. (This will be replaced by the new home screen menu)"""
     print("\n" + "=" * 50)
     print("Account Services".center(50))
     print("=" * 50)
@@ -813,6 +876,45 @@ def display_payment_methods_menu():
     print("5. Add Crypto Wallet (Bitcoin, Ethereum, Solana)")
     print("6. Set/Change Payment Passcode")
     print("7. View My Payment Methods")
+    print("P. Go back to previous menu")
+    print("M. Go to main menu")
+    print("-" * 50)
+
+# New Menu Display Functions for Home Screen
+def display_transfers_menu():
+    print("\n" + "=" * 50)
+    print("Transfers".center(50))
+    print("=" * 50)
+    print("1. Between Own Accounts")
+    print("2. Local Transfers")
+    print("3. International Transfers")
+    print("4. Add New Payee")
+    print("5. History")
+    print("P. Go back to previous menu")
+    print("M. Go to main menu")
+    print("-" * 50)
+
+def display_payments_menu():
+    print("\n" + "=" * 50)
+    print("Payments".center(50))
+    print("=" * 50)
+    print("1. Mobile Money")
+    print("2. Pay to Saved Biller")
+    print("3. Add Biller")
+    print("4. Loan Repayment")
+    print("5. Loan Repayment History")
+    print("P. Go back to previous menu")
+    print("M. Go to main menu")
+    print("-" * 50)
+
+def display_service_requests_menu():
+    print("\n" + "=" * 50)
+    print("Service Requests".center(50))
+    print("=" * 50)
+    print("1. Report Lost or Stolen Card")
+    print("2. Replace Card")
+    print("3. Cheque Book Request")
+    print("4. Change Debit Card PIN")
     print("P. Go back to previous menu")
     print("M. Go to main menu")
     print("-" * 50)
@@ -1224,23 +1326,17 @@ def create_account():
         # --- Account Activation Logic ---
         initial_balance_needed = account_type_details.get("Opening balance", 0.0)
         actual_initial_deposit = 0.0
-        account_activated = False
+        
+        # Set initial account status
+        account_status = 'Active' if initial_balance_needed == 0 else 'Activation needed'
 
         if initial_balance_needed > 0:
             print(f"{BLUE_INFO} This account type requires an opening balance of KES {initial_balance_needed:,.2f}.")
             print(f"{BLUE_INFO} You will need to deposit this amount to fully activate your account.")
-            
-            # The previous confusing question is replaced by this clear instruction.
-            # Account is created, but considered not fully activated until the deposit is made.
-            actual_initial_deposit = 0.0 # Account starts with 0 balance for now
-            account_activated = False # Will need to activate via deposit later
-            print(f"{BLUE_INFO} Your account will be created. Please note that you must deposit KES {initial_balance_needed:,.2f} to fully activate it.")
-            print(f"{BLUE_INFO} You can do this from 'Account Services' -> 'Make a Deposit' after logging in.")
+            print(f"{BLUE_INFO} Your account will be created with status '{account_status}'. Please deposit KES {initial_balance_needed:,.2f} to fully activate it.")
+            print(f"{BLUE_INFO} You can do this from 'Home Screen' -> 'Payments' -> 'Make a Deposit' after logging in.")
             input("Press Enter to continue...") # Pause for user to read
-
         else: # Opening balance is 0
-            actual_initial_deposit = 0.0
-            account_activated = True
             print(f"{GREEN_CHECKMARK} Account activated immediately (no opening balance required).")
 
         # Assign a random account number
@@ -1273,7 +1369,8 @@ def create_account():
             "payment_methods": [], # Initialize empty payment methods list
             "payment_passcode": None, # Initialize payment passcode
             "beneficiaries": [],
-            "statements": [] # Initialize empty statements list
+            "statements": [], # Initialize empty statements list
+            "account_status": account_status # New: Account Status
         }
         
         # Add a default payment method with 150 USD balance for the user, as discussed
@@ -1300,7 +1397,7 @@ def create_account():
         send_security_questions_email(name, email, selected_questions)
         
         # Send comprehensive activation email and SMS if activated
-        if account_activated:
+        if account_status == 'Active':
             send_account_activation_email(new_username, email, account_number, account_type_details, my_branch)
             send_activation_sms(full_phone_number, account_number)
             print(f"\n{GREEN_CHECKMARK} Account for '{new_username}' successfully created and activated!")
@@ -1308,7 +1405,7 @@ def create_account():
             print(f"\n{GREEN_CHECKMARK} Account for '{new_username}' successfully created. It needs an initial deposit to be fully activated.")
             print(f"{BLUE_INFO} Your new account number is: {account_number}")
             print(f"{BLUE_INFO} Please remember your username and password for login.")
-            print(f"{BLUE_INFO} Log in and navigate to 'Account Services' -> 'Make a Deposit' to activate your account.")
+            print(f"{BLUE_INFO} Log in and navigate to 'Home Screen' -> 'Payments' -> 'Make a Deposit' to activate your account.")
 
         return True # Indicate successful account creation
     elif current_time >= otp_expiration_time:
@@ -1318,6 +1415,236 @@ def create_account():
         print(f"{RED_X} Incorrect OTP. Account creation failed. Please try again.")
         return False
 
+# --- New Handler Functions for Home Screen Menu ---
+# Moved these functions up to be defined before run_banking_app calls them.
+
+def handle_transfers_flow(username):
+    """Handles the Transfers menu options."""
+    while True:
+        display_transfers_menu()
+        choice = get_user_input("Enter your choice: ", int)
+        if choice == 'M': return 'M'
+        if choice == 'P': return 'P'
+        if choice is None: return None
+
+        if choice == 1:
+            print(f"{BLUE_INFO} Between Own Accounts feature is under development.")
+        elif choice == 2:
+            print(f"{BLUE_INFO} Local Transfers feature is under development.")
+        elif choice == 3:
+            print(f"{BLUE_INFO} International Transfers feature is under development.")
+        elif choice == 4:
+            print(f"{BLUE_INFO} Add New Payee feature is under development.")
+        elif choice == 5:
+            view_transaction_history(username) # Re-use existing function for now
+        else:
+            print(f"{RED_X} Invalid choice.")
+        input("Press Enter to continue...")
+
+def handle_payments_flow(username):
+    """Handles the Payments menu options."""
+    while True:
+        display_payments_menu()
+        choice = get_user_input("Enter your choice: ", int)
+        if choice == 'M': return 'M'
+        if choice == 'P': return 'P'
+        if choice is None: return None
+
+        if choice == 1: # Mobile Money (Deposit)
+            result = deposit(username)
+            if result == 'M': return 'M'
+            if result == 'P': continue
+            if result is None: return None
+        elif choice == 2:
+            print(f"{BLUE_INFO} Pay to Saved Biller feature is under development.")
+        elif choice == 3:
+            print(f"{BLUE_INFO} Add Biller feature is under development.")
+        elif choice == 4:
+            print(f"{BLUE_INFO} Loan Repayment feature is under development.")
+        elif choice == 5:
+            print(f"{BLUE_INFO} Loan Repayment History feature is under development.")
+        else:
+            print(f"{RED_X} Invalid choice.")
+        input("Press Enter to continue...")
+
+def handle_my_card_flow(username):
+    """Handles the My Card menu options."""
+    # This can be expanded to manage cards, view details, etc.
+    accounts_data = read_accounts()
+    user_details = accounts_data[username]["details"]
+    cards = user_details.get("cards", [])
+
+    if not cards:
+        print(f"{BLUE_INFO} You have no cards linked to your account yet.")
+        print(f"{BLUE_INFO} You can apply for cards under 'Apply for Products' or manage them via 'Service Requests'.")
+    else:
+        print("\n--- Your Cards ---")
+        for i, card in enumerate(cards, 1):
+            print(f"{i}. {card.get('Card Name', 'N/A')} (Number: {card.get('Card Number', 'N/A')})")
+        print(f"{BLUE_INFO} More detailed card management is under development.")
+    input("Press Enter to continue...")
+    return True
+
+def handle_service_requests_flow(username):
+    """Handles the Service Requests menu options."""
+    while True:
+        display_service_requests_menu()
+        choice = get_user_input("Enter your choice: ", int)
+        if choice == 'M': return 'M'
+        if choice == 'P': return 'P'
+        if choice is None: return None
+
+        if choice == 1:
+            print(f"{BLUE_INFO} Report Lost or Stolen Card feature is under development.")
+        elif choice == 2:
+            print(f"{BLUE_INFO} Replace Card feature is under development.")
+        elif choice == 3:
+            print(f"{BLUE_INFO} Cheque Book Request feature is under development.")
+        elif choice == 4:
+            print(f"{BLUE_INFO} Change Debit Card PIN feature is under development.")
+        else:
+            print(f"{RED_X} Invalid choice.")
+        input("Press Enter to continue...")
+
+def handle_insurance_flow(username):
+    """Handles the Insurance menu option."""
+    print(f"{BLUE_INFO} Insurance products and services are under development.")
+    input("Press Enter to continue...")
+    return True
+
+def handle_apply_for_products_flow(username):
+    """Handles the Apply for Products menu option."""
+    print(f"{BLUE_INFO} Apply for new products (e.g., loans, new accounts, cards) features are under development.")
+    input("Press Enter to continue...")
+    return True
+
+def handle_how_to_fund_account_flow(username):
+    """Displays instructions on how to fund the account."""
+    accounts_data = read_accounts()
+    user_details = accounts_data[username]["details"]
+    account_number = user_details.get('account_number', 'N/A')
+
+    print("\n" + "=" * 50)
+    print("How To Fund My Account".center(50))
+    print("=" * 50)
+    print("To deposit funds to your La Familia Bank account:")
+    print("1. Via M-Pesa/Airtel Money Paybill:")
+    print("   - Go to your M-Pesa/Airtel Money menu.")
+    print("   - Select 'Lipa na M-Pesa' or 'Pay Bill'.")
+    print("   - Enter Business No: 234765")
+    print(f"   - Enter Account No: {account_number}")
+    print("   - Enter Amount and your PIN.")
+    print("2. Via Bank Transfer:")
+    print("   - Initiate a bank transfer from another bank.")
+    print(f"   - Use your La Familia Bank Account Number: {account_number}")
+    print("   - Bank Name: La Familia Bank")
+    print(f"{BLUE_INFO} Note: Funds from linked payment methods (M-Pesa, PayPal, etc.) can be deposited via 'Payments' -> 'Mobile Money' in the app.")
+    input("Press Enter to continue...")
+    return True
+
+def handle_currency_converter_flow():
+    """Handles the Currency Converter menu option."""
+    while True:
+        print("\n--- Currency Converter ---")
+        print("Supported Currencies: KES (Kenyan Shilling), USD (United States Dollar)")
+        print("P. Go back to previous menu")
+        print("M. Go to main menu")
+
+        from_currency = get_user_input("Enter currency to convert FROM (e.g., KES, USD): ").upper()
+        if from_currency == 'M': return 'M'
+        if from_currency == 'P': return 'P'
+        if from_currency is None: return None
+        if from_currency not in ["KES", "USD"]:
+            print(f"{RED_X} Unsupported 'from' currency. Please enter KES or USD.")
+            continue
+
+        to_currency = get_user_input("Enter currency to convert TO (e.g., KES, USD): ").upper()
+        if to_currency == 'M': return 'M'
+        if to_currency == 'P': return 'P'
+        if to_currency is None: return None
+        if to_currency not in ["KES", "USD"]:
+            print(f"{RED_X} Unsupported 'to' currency. Please enter KES or USD.")
+            continue
+
+        amount_str = get_user_input(f"Enter amount in {from_currency}: ", float)
+        if amount_str == 'M': return 'M'
+        if amount_str == 'P': return 'P'
+        if amount_str is None: return None
+        if amount_str <= 0:
+            print(f"{RED_X} Amount must be positive.")
+            continue
+
+        converted_amount = currency_converter(amount_str, from_currency, to_currency)
+        if converted_amount is not None:
+            print(f"{GREEN_CHECKMARK} {amount_str:,.2f} {from_currency} is equal to {converted_amount:,.2f} {to_currency}.")
+        input("Press Enter to continue...")
+        # After conversion, stay in the converter menu unless 'M' or 'P' was entered
+        # This loop will continue until 'M' or 'P' is entered for currency inputs
+        if from_currency in ['M', 'P'] or to_currency in ['M', 'P'] or amount_str in ['M', 'P']:
+             continue
+
+
+def handle_locate_flow():
+    """Handles the Locate menu option (re-uses ATM locator)."""
+    result = display_atm_locations()
+    return result # Will return 'M' or 'P' from display_atm_locations
+
+def handle_settings_flow(username):
+    """Handles the Settings menu option."""
+    print(f"{BLUE_INFO} Account settings features are under development.")
+    input("Press Enter to continue...")
+    return True
+
+def handle_about_flow():
+    """Handles the About menu option."""
+    print("\n" + "=" * 50)
+    print(f"About {BANK_NAME}".center(50))
+    print("=" * 50)
+    print(f"{BANK_NAME} is a leading financial institution committed to providing")
+    print("innovative and reliable banking solutions. We prioritize your financial")
+    print("well-being and strive to offer seamless services.")
+    print("\nVersion: 1.0")
+    print("Developed by: Gemini AI")
+    print(f"Contact: info@{BANK_NAME.lower().replace(' ', '')}.com")
+    print("=" * 50)
+    input("Press Enter to continue...")
+    return True
+
+# --- Account Services Flow (kept for structure, but main calls moved to home screen handlers) ---
+def handle_account_services_flow(current_username):
+    """
+    Handles the flow for logged-in account services.
+    NOTE: Most functionalities previously here are now directly called from
+    the new home screen handlers (e.g., deposit, withdraw, view statements).
+    This function primarily serves as a placeholder or could be re-purposed
+    for a consolidated 'Account Details' view if needed.
+    """
+    accounts_data = read_accounts()
+    user_details = accounts_data[current_username]["details"]
+    
+    print(f"\n--- Your Account Details ({current_username}) ---")
+    print(f"Account Number: {user_details.get('account_number', 'N/A')}")
+    print(f"Account Type: {user_details.get('account_type_name', 'Not Set')}")
+    print(f"Account Status: {user_details.get('account_status', 'N/A')}") # Display status
+    print(f"Current Balance: KES {accounts_data[current_username]['balance']:.2f}")
+    
+    # Display other user details, excluding sensitive or large nested structures
+    for key, value in user_details.items():
+        if key not in ['account_number', 'account_type_name', 'account_type_features', 
+                       'security_questions', 'payment_methods', 'payment_passcode', 
+                       'statements', 'cards', 'card_pins', 'beneficiaries', 'account_status']:
+            print(f"{key.replace('_', ' ').title()}: {value}")
+            
+    # Display account features if available
+    if 'account_type_features' in user_details and user_details['account_type_features']:
+        print("\n--- Account Features ---")
+        for key, value in user_details['account_type_features'].items():
+            if key != "Account Name": # Already displayed
+                print(f"   - {key.replace('_', ' ').title()}: {value}")
+    input("Press Enter to continue...")
+    return True # Return to home screen
+
+
 # --- Main Application Loop ---
 
 def run_banking_app():
@@ -1326,17 +1653,17 @@ def run_banking_app():
 
     print(f"{GREEN_CHECKMARK} Welcome to {BANK_NAME} - {BANK_TAGLINE} {GREEN_CHECKMARK}")
 
-    while True: # Outer loop for login/registration
-        display_main_menu(current_username is not None)
-        choice = get_user_input("Enter your choice: ", int)
-        
-        if choice is None: # EOFError or other critical input issue
-            print("Exiting Application.")
-            break
-        if choice == 'M': # Should not happen from main menu, but good for consistency
-            continue
-
+    while True: # Outer loop for login/registration/home screen
         if current_username is None: # Not logged in
+            display_main_menu(False)
+            choice = get_user_input("Enter your choice: ", int)
+            
+            if choice is None: # EOFError or other critical input issue
+                print("Exiting Application.")
+                break
+            if choice == 'M': # Should not happen from main menu, but good for consistency
+                continue
+
             if choice == 1: # Open a bank account
                 result = handle_account_opening_flow()
                 if result is None: break # Exit program
@@ -1360,269 +1687,107 @@ def run_banking_app():
                 if username in accounts_data and accounts_data[username]["password"] == password:
                     print(f"\n{GREEN_CHECKMARK} Login successful! Welcome, {username}!")
                     current_username = username
+                    input("Press Enter to continue...")
                 else:
                     print(f"{RED_X} Invalid username or password. Please try again.")
-                input("Press Enter to continue...")
+                    input("Press Enter to continue...")
             elif choice == 4: # Exit program
                 print("\nThank you for using the Python Bank Simulation. Goodbye!")
                 break
             else:
                 print(f"{RED_X} Invalid choice. Please enter 1, 2, 3, or 4.")
                 input("Press Enter to continue...")
-        else: # Logged in
-            if choice == 1: # Open a bank account (re-direct to account services if logged in)
-                print(f"{BLUE_INFO} You are already logged in. If you wish to open another account, please log out first.")
-                input("Press Enter to continue...")
-                # Could also offer to go to Account Services directly instead of forcing logout
-                # result = handle_account_services_flow(current_username)
-                # if result == "logout":
-                #     current_username = None
-                # elif result is None:
-                #     break
-            elif choice == 2: # Explore our offers
-                result = handle_offers_flow()
-                if result is None: break
+        else: # Logged in - display the new home screen
+            display_home_screen(current_username)
+            home_choice = get_user_input("Enter your choice: ", int)
+
+            if home_choice is None: # Critical exit
+                print("Exiting Application.")
+                break
+            if home_choice == 'M': # Should not happen from home screen, but for consistency
+                continue
+            if home_choice == 'P': # Should not happen from home screen, but for consistency
+                continue
+
+            if home_choice == 1: # Transfers
+                result = handle_transfers_flow(current_username)
                 if result == 'M': continue
-            elif choice == 3: # Account Services
-                result = handle_account_services_flow(current_username)
-                if result == "logout":
-                    current_username = None
-                elif result is None:
-                    break
-            elif choice == 4: # Logout
+                if result is None: break
+            elif home_choice == 2: # Payments
+                # This will now lead to the payments menu, which includes deposit
+                while True:
+                    display_payments_menu()
+                    payment_choice = get_user_input("Enter your choice: ", int)
+                    if payment_choice == 'M': result = 'M'; break
+                    if payment_choice == 'P': result = 'P'; break
+                    if payment_choice is None: result = None; break
+
+                    if payment_choice == 1: # Mobile Money (Deposit)
+                        deposit_result = deposit(current_username)
+                        if deposit_result == 'M': result = 'M'; break
+                        if deposit_result == 'P': continue # Stay in payments menu
+                        if deposit_result is None: result = None; break
+                    elif payment_choice == 2:
+                        print(f"{BLUE_INFO} Pay to Saved Biller feature is under development.")
+                        input("Press Enter to continue...")
+                    elif payment_choice == 3:
+                        print(f"{BLUE_INFO} Add Biller feature is under development.")
+                        input("Press Enter to continue...")
+                    elif payment_choice == 4:
+                        print(f"{BLUE_INFO} Loan Repayment feature is under development.")
+                        input("Press Enter to continue...")
+                    elif payment_choice == 5:
+                        print(f"{BLUE_INFO} Loan Repayment History feature is under development.")
+                        input("Press Enter to continue...")
+                    else:
+                        print(f"{RED_X} Invalid choice for Payments menu.")
+                        input("Press Enter to continue...")
+                if result == 'M': continue
+                if result is None: break
+                if result == 'P': continue # Stay on home screen after payments flow
+            elif home_choice == 3: # My Card
+                result = handle_my_card_flow(current_username)
+                if result == 'M': continue
+                if result is None: break
+            elif home_choice == 4: # Service Requests
+                result = handle_service_requests_flow(current_username)
+                if result == 'M': continue
+                if result is None: break
+            elif home_choice == 5: # Insurance
+                result = handle_insurance_flow(current_username)
+                if result == 'M': continue
+                if result is None: break
+            elif home_choice == 6: # Apply for Products
+                result = handle_apply_for_products_flow(current_username)
+                if result == 'M': continue
+                if result is None: break
+            elif home_choice == 7: # How To Fund My Account
+                result = handle_how_to_fund_account_flow(current_username)
+                if result == 'M': continue
+                if result is None: break
+            elif home_choice == 8: # Currency Converter
+                result = handle_currency_converter_flow()
+                if result == 'M': continue
+                if result is None: break
+            elif home_choice == 9: # Locate
+                result = handle_locate_flow()
+                if result == 'M': continue
+                if result is None: break
+            elif home_choice == 10: # Settings
+                result = handle_settings_flow(current_username)
+                if result == 'M': continue
+                if result is None: break
+            elif home_choice == 11: # About
+                result = handle_about_flow()
+                if result == 'M': continue
+                if result is None: break
+            elif home_choice == 12: # Log Out
                 print(f"\nLogging out {current_username}. Returning to main menu.")
                 current_username = None # Set to None to exit this loop and re-enter login loop
                 input("Press Enter to continue...")
             else:
-                print(f"{RED_X} Invalid choice. Please enter 1, 2, 3, or 4.")
+                print(f"{RED_X} Invalid choice. Please enter a number between 1 and 12.")
                 input("Press Enter to continue...")
-
-def handle_account_opening_flow():
-    """Handles the flow for opening a bank account."""
-    while True:
-        display_account_opening_menu()
-        account_choice = get_user_input("Enter your choice: ", int)
-        if account_choice == 'M': return 'M'
-        if account_choice == 'P': return 'P'
-        if account_choice is None: return None
-
-        if account_choice == 1: # Open a bank account online
-            email = get_user_input("Enter your email address: ")
-            if email == 'M' or email == 'P': continue
-            if email is None: return None
-            while not is_valid_email(email):
-                print(f"{RED_X} Invalid email address.")
-                email = get_user_input("Enter your email address: ")
-                if email == 'M' or email == 'P': break # Allow breaking from validation loop
-                if email is None: return None
-            if email == 'M' or email == 'P': continue # If loop broke due to M/P
-
-            print(f"{BLUE_INFO} Dear customer, we appreciate your interest in starting a financial journey with us. Attached to this is your application form. Please download it and fill it carefully, then scan the copy back to us.")
-            download_choice = get_user_input("Enter Y (yes to download), M (to go back to main menu), or P (to go back to the previous menu): ")
-            if download_choice.upper() == 'Y':
-                if send_application_form_email(email): # Send the simulated email
-                    print(f"{GREEN_CHECKMARK} Application form sent to your email (check {EMAIL_INBOX_FILE}).")
-                else:
-                    print(f"{RED_X} Failed to send application form email.")
-                input("Press Enter to continue...")
-            elif download_choice.upper() == 'M':
-                return 'M'
-            elif download_choice.upper() == 'P':
-                continue # Stay in account opening menu
-            elif download_choice is None:
-                return None
-            else:
-                print(f"{RED_X} Invalid choice. Returning to the account opening menu.")
-                input("Press Enter to continue...")
-            return True # Successfully handled online account opening path
-        elif account_choice == 2: # Visit the nearest Bank branch
-            while True: # Loop for token machine services
-                display_token_machine_menu()
-                service_choice = get_user_input("Select a service: ", int)
-                if service_choice == 'M': return 'M'
-                if service_choice == 'P': break # Go back to account opening menu
-                if service_choice is None: return None
-                
-                display_token(service_choice)
-
-                if service_choice == 1: # Open New Account (in-branch flow)
-                    has_requirements = get_user_input("Do you have all the requirements listed on your token? (yes/no): ").lower()
-                    if has_requirements == 'M' or has_requirements == 'P': continue
-                    if has_requirements is None: return None
-                    if has_requirements == 'yes':
-                        result = create_account() # Call the detailed account creation function
-                        if result is True: # Account successfully created
-                            return 'M' # Go to main menu after successful creation
-                        elif result is None: # EOFError during creation
-                            return None
-                        # If result is False (OTP incorrect or email failed), stay in token machine menu
-                    else:
-                        print(f"{BLUE_INFO} Please gather all requirements and visit us again.")
-                        input("Press Enter to continue...")
-                else: # Other token machine services (placeholder)
-                    print(f"{BLUE_INFO} Service '{get_service_name(service_choice)}' will be handled by a bank representative.")
-                    input("Press Enter to continue...")
-            continue # After breaking from token machine loop, go back to account opening menu
-        else:
-            print(f"{RED_X} Invalid choice. Please enter 1 or 2.")
-            input("Press Enter to continue...")
-
-def handle_offers_flow():
-    """Handles the flow for exploring bank offers."""
-    while True:
-        display_offers_menu()
-        offer_choice = get_user_input("Enter your choice: ", int)
-        if offer_choice == 'M': return 'M'
-        if offer_choice == 'P': return 'P'
-        if offer_choice is None: return None
-
-        if offer_choice == 1: # Bank accounts
-            while True:
-                display_bank_accounts_menu()
-                account_type_choice = get_user_input("Select an account type to view details: ", int)
-                if account_type_choice == 'M': return 'M'
-                if account_type_choice == 'P': break # Go back to offers menu
-                if account_type_choice is None: return None
-                
-                details = display_account_details_info(account_type_choice)
-                if details:
-                    input("Press Enter to continue...")
-            continue # After breaking from bank accounts loop, go back to offers menu
-        elif offer_choice == 2: # Our Cards
-            while True:
-                display_cards_menu()
-                card_category_choice = get_user_input("Select a card category: ", int)
-                if card_category_choice == 'M': return 'M'
-                if card_category_choice == 'P': break # Go back to offers menu
-                if card_category_choice is None: return None
-
-                if card_category_choice == 1: # Debit Cards
-                    while True:
-                        display_debit_cards()
-                        debit_card_choice = get_user_input("Select a debit card to view details: ", int)
-                        if debit_card_choice == 'M': return 'M'
-                        if debit_card_choice == 'P': break # Go back to cards menu
-                        if debit_card_choice is None: return None
-                        display_card_details_info(1, debit_card_choice)
-                        input("Press Enter to continue...")
-                    continue
-                elif card_category_choice == 2: # Prepaid Cards
-                    while True:
-                        display_prepaid_cards()
-                        prepaid_card_choice = get_user_input("Select a prepaid card to view details: ", int)
-                        if prepaid_card_choice == 'M': return 'M'
-                        if prepaid_card_choice == 'P': break # Go back to cards menu
-                        if prepaid_card_choice is None: return None
-                        display_card_details_info(2, prepaid_card_choice)
-                        input("Press Enter to continue...")
-                    continue
-                elif card_category_choice == 3: # Credit Cards
-                    while True:
-                        display_credit_cards()
-                        credit_card_choice = get_user_input("Select a credit card to view details: ", int)
-                        if credit_card_choice == 'M': return 'M'
-                        if credit_card_choice == 'P': break # Go back to cards menu
-                        if credit_card_choice is None: return None
-                        display_card_details_info(3, credit_card_choice)
-                        input("Press Enter to continue...")
-                    continue
-                else:
-                    print(f"{RED_X} Invalid card category choice.")
-                    input("Press Enter to continue...")
-            continue # After breaking from cards category loop, go back to offers menu
-        elif offer_choice == 3: # ATM locator
-            result = display_atm_locations() # This function handles its own loop and returns 'M'/'P'
-            if result == 'M': return 'M'
-            if result == 'P': continue # Stay in offers menu after ATM locator
-            if result is None: return None
-        else:
-            print(f"{RED_X} Invalid choice. Please enter 1, 2, or 3.")
-            input("Press Enter to continue...")
-
-def handle_account_services_flow(current_username):
-    """Handles the flow for logged-in account services."""
-    while True:
-        display_account_services_menu()
-        service_choice = get_user_input("Enter your choice: ", int)
-        if service_choice == 'M': return 'M'
-        if service_choice == 'P': return 'P' # Return to main menu (or previous if nested)
-        if service_choice is None: return None
-
-        if service_choice == 1: # View Account Details
-            accounts_data = read_accounts()
-            user_details = accounts_data[current_username]["details"]
-            print(f"\n--- Your Account Details ({current_username}) ---")
-            print(f"Account Number: {user_details.get('account_number', 'N/A')}")
-            print(f"Account Type: {user_details.get('account_type_name', 'Not Set')}")
-            print(f"Current Balance: KES {accounts_data[current_username]['balance']:.2f}")
-            for key, value in user_details.items():
-                if key not in ['account_number', 'account_type_name', 'account_type_features', 'security_questions', 'payment_methods', 'payment_passcode', 'statements', 'cards', 'card_pins', 'beneficiaries']: # Avoid re-printing nested dicts directly
-                    print(f"{key.replace('_', ' ').title()}: {value}")
-            
-            # Display account features if available
-            if 'account_type_features' in user_details and user_details['account_type_features']:
-                print("\n--- Account Features ---")
-                for key, value in user_details['account_type_features'].items():
-                    if key != "Account Name": # Already displayed
-                        print(f"  - {key.replace('_', ' ').title()}: {value}")
-            input("Press Enter to continue...")
-        elif service_choice == 2: # Make a Deposit
-            result = deposit(current_username)
-            if result == 'M': return 'M'
-            if result == 'P': continue
-            if result is None: return None
-        elif service_choice == 3: # Make a Withdrawal
-            result = withdraw(current_username)
-            if result == 'M': return 'M'
-            if result == 'P': continue
-            if result is None: return None
-        elif service_choice == 4: # View Transaction History
-            view_transaction_history(current_username)
-        elif service_choice == 5: # My Statements (New)
-            view_my_statements(current_username)
-        elif service_choice == 6: # Add/Manage Payment Methods (New)
-            while True: # Loop for managing payment methods
-                display_payment_methods_menu()
-                payment_method_choice = get_user_input("Enter your choice: ", int)
-                if payment_method_choice == 'M': return 'M'
-                if payment_method_choice == 'P': break # Go back to account services
-                if payment_method_choice is None: return None
-
-                if 1 <= payment_method_choice <= 5: # Add payment method
-                    result = add_payment_method(current_username, payment_method_choice)
-                    if result is None: return None # Critical exit
-                elif payment_method_choice == 6: # Set/Change Payment Passcode
-                    result = set_payment_passcode(current_username)
-                    if result is None: return None # Critical exit
-                elif payment_method_choice == 7: # View My Payment Methods
-                    view_payment_methods(current_username)
-                else:
-                    print(f"{RED_X} Invalid choice for payment methods.")
-                    input("Press Enter to continue...")
-            continue # Stay in account services after managing payment methods
-        elif service_choice == 7: # Manage Cards (placeholder for now)
-            print(f"{BLUE_INFO} Card management features are under development.")
-            input("Press Enter to continue...")
-        elif service_choice == 8: # Request Services (placeholder for now)
-            print(f"{BLUE_INFO} Request services features are under development.")
-            input("Press Enter to continue...")
-        elif service_choice == 9: # Make Payments (placeholder for now, distinct from Deposit)
-            print(f"{BLUE_INFO} Payment features (e.g., bill payments, transfers to others) are under development.")
-            input("Press Enter to continue...")
-        elif service_choice == 10: # Check Loan Balance/Limit (placeholder for now)
-            accounts_data = read_accounts()
-            user_details = accounts_data[current_username]["details"]
-            loan_limit = user_details.get("loan_limit", 0.0)
-            active_loans = user_details.get("active_loans", 0.0)
-            print(f"\n--- Loan Information ---")
-            print(f"Your Loan Limit: KES {loan_limit:.2f}")
-            print(f"Active Loans: KES {active_loans:.2f}")
-            input("Press Enter to continue...")
-        elif service_choice == 11: # Logout
-            return "logout" # Signal to the calling function to log out
-        else:
-            print(f"{RED_X} Invalid choice. Please enter a number between 1 and 11.")
-            input("Press Enter to continue...")
 
 # --- Main Execution Block ---
 
