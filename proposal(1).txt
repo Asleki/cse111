@@ -1,0 +1,149 @@
+CSE 111 Proposal for a Student Chosen Program
+
+    (This is a proposal. All proposals are written with our best
+    knowledge at the beginning of a project. As we progress from the
+    beginning to the end of a project, we gain more knowledge, and we
+    change some of our proposed ideas. This is part of completing any
+    project and is fine.  However, we still must write a proposal so
+    that our teachers or supervisors know what we intend to do. Please
+    answer each of the following questions to the best of your
+    knowledge.)
+
+1. What is the title of your program?
+    Secure and Interactive Python Banking Simulation (SIBS).
+
+2. What real-world problem will your program address or help to solve?
+    This program aims to develop a comprehensive command-line-based banking
+    simulation application using Python. It addresses the real-world problem 
+    of demonstrating core banking functionalities in a simplified, yet secure and 
+    interactive, environment. Many individuals, especially students or those new to financial 
+    concepts, benefit from a hands-on, risk-free platform to understand how bank accounts 
+    operate, including deposits, withdrawals, transfers, account management, and even loan
+    applications. This simulation provides a practical and engaging way to learn about personal 
+    finance management and the underlying logic of banking systems, without the complexity or 
+    security risks of real-world financial transactions
+
+3. What will you learn from developing this program?
+•	Understanding Core Banking Operations: Gain a deep understanding 
+    of how fundamental banking services (deposits, withdrawals, transfers, account creation)
+    are logically processed.
+•	Data Persistence: Learn to implement data storage and retrieval using JSON files for user 
+    accounts and transaction history, simulating a database.
+•	Modular Programming: Develop skills in breaking down a complex application into
+    smaller, manageable functions and modules for improved organization and reusability.  
+•	User Input and Validation: Master techniques for handling various types of user 
+    input, including numeric and string data, and implementing robust validation to prevent errors. 
+•	Security Concepts: Explore basic security measures such as password 
+    hashing (though not fully implemented, concepts of hashing are implied for robust systems), OTP
+    generation, and payment passcodes.
+•	Dynamic Feature Implementation: Understand how to implement dynamic features like currency
+    conversion and a tiered loan limit system based on user activity.
+•	Interactive User Interface: Create an engaging and user-friendly command-line interface 
+    with clear menus and feedback messages.  
+•	External Communication Simulation: Learn to simulate external communications like email 
+    and SMS notifications for transactions and account activities.
+
+4. What Python modules will your program use?
+
+    (Some examples are: csv, datetime, functools, matplotlib, math,
+    pandas, pytest, random, requests, and tkinter.)
+•	json: For reading from and writing to JSON files, serving as the primary data storage
+    mechanism for user accounts and transactions.
+•	datetime: For handling dates and times, essential for transaction timestamps, loan due
+    dates, OTP expiry, and account age calculations.
+•	random: For generating random numbers, crucial for OTP generation, reference numbers, and 
+    potentially other simulated elements.
+•	re: For regular expressions, used in input validation (e.g., email format, phone numbers).
+•	hashlib: (Anticipated for future security enhancements) For hashing passwords or sensitive data.
+
+
+5. List the names of functions you will need?
+
+    (Remember that the most reusable functions don't get user input and
+    don't print results but instead have parameters and return a result.
+    Functions that get user input and print results are important and do
+    useful work but are not easily reusable.)
+
+    (Remember also that it's hard to test functions that get user input
+    and print results. It's easy to test functions that don't get user
+    input and don't print results but instead have parameters and return
+    a result. Therefore, you should write most of your program functions
+    to have parameters and return a result.)
+
+•  log_communication(log_file, sender, recipient, subject, body)
+•	send_otp_email(name, email, otp, expiry_time)
+•	send_payment_otp_sms(phone_number, otp)
+•	send_application_form_email(email)
+•	send_security_questions_email(name, email, questions)
+•	send_account_activation_email(username, email, account_number, account_type_details, branch_name)
+•	send_activation_sms(phone_number, account_number)
+•	send_transaction_notification(username, email, phone_number, transaction_type, amount, currency, ref_num, description, new_balance)
+•	send_loan_disbursement_notification(username, email, phone_number, loan_amount, interest, repayment_date, disbursed_to, account_currency, ref_num)
+•	read_accounts()
+•	save_accounts(accounts_data)
+•	read_transactions()
+•	save_transactions(transactions_data)
+•	delete_all_data()
+•	generate_reference_number()
+•	is_valid_email(email)
+•	generate_otp()
+•	convert_currency(amount, from_currency, to_currency)
+•	get_user_input(prompt, input_type=str, allow_empty=False)
+•	display_main_menu(logged_in)
+•	display_account_opening_menu()
+•	display_token_machine_menu()
+•	display_token(service_choice)
+•	get_service_name(service_choice)
+•	create_account()
+•	deposit(username)
+•	withdraw(username)
+•	view_transaction_history(username)
+•	view_my_statements(username)
+•	display_payment_methods_menu()
+•	add_payment_method(username, choice)
+•	set_payment_passcode(username)
+•	view_payment_methods(username)
+•	make_payment(username)
+•	update_loan_limit(username)
+•	request_loan(username)
+•	display_offers_menu()
+•	display_bank_accounts_menu()
+•	display_account_details_info(account_type_choice)
+•	display_cards_menu()
+•	display_debit_cards()
+•	display_prepaid_cards()
+•	display_credit_cards()
+•	display_card_details_info(card_category_choice, card_type_choice)
+•	display_atm_locations_menu()
+•	display_atm_locations()
+•	handle_account_opening_flow()
+•	handle_offers_flow()
+•	handle_account_services_flow(current_username)
+•	run_banking_app()
+
+
+
+6. List the names of the test functions you will write.
+
+•	test_read_accounts_initial_empty()
+•	test_save_accounts_new_user()
+•	test_deposit_updates_balance_and_statements()
+•	test_withdraw_updates_balance_and_statements()
+•	test_withdraw_insufficient_funds()
+•	test_add_mobile_money_method()
+•	test_add_paypal_method()
+•	test_set_payment_passcode_with_otp()
+•	test_make_payment_to_mobile_money_success()
+•	test_make_payment_insufficient_balance()
+•	test_update_loan_limit_monthly_deposit()
+•	test_update_loan_limit_account_age()
+•	test_request_loan_success_to_bank_account()
+•	test_request_loan_success_to_external_method_currency_conversion()
+•	test_request_loan_exceeds_limit()
+•	test_send_otp_email_logs_correctly()
+•	test_send_transaction_notification_logs_correctly()
+•	test_account_creation_flow()
+•	test_login_success()
+•	test_login_failure_invalid_credentials()
+
+

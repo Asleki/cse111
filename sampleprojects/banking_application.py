@@ -1647,6 +1647,16 @@ def handle_account_services_flow(current_username):
 
 # --- Main Application Loop ---
 
+def handle_account_opening_flow():
+    """Handles the account opening flow by calling create_account()."""
+    return create_account()
+
+def handle_offers_flow():
+    """Stub for offers flow; implement as needed."""
+    print(f"{BLUE_INFO} Offers flow is under development.")
+    input("Press Enter to continue...")
+    return 'M'
+
 def run_banking_app():
     """Manages the main flow of the banking application."""
     current_username = None # Stores the username of the currently logged-in user

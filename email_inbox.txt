@@ -70,3 +70,205 @@ Your opinion matters to us!
 Sincerely,
 The Inkom Emporium Team
 ----------------------------
+
+--- New Email ---
+Date: 2025-06-04
+Time: 19:55:00
+From: noreply@pythonbank.com
+To: alexmalunda@icloud.com
+Subject: Your Python Bank OTP for Account Registration
+
+Dear Alex Malunda,
+
+Your One-Time Password (OTP) for Python Bank account registration is: 113270
+This OTP is valid for 5 minutes and will expire at 20:00:00.
+Please do not share this OTP with anyone.
+
+Thank you for choosing Python Bank - Your Future, Our Priority
+-------------------
+
+--- New Email ---
+Date: 2025-06-04
+Time: 19:55:27
+From: noreply@pythonbank.com
+To: alexmalunda@icloud.com
+Subject: Python Bank Security Questions Setup Confirmation
+
+Dear Alex Malunda,
+
+This is to confirm that your security questions have been successfully set up for your Python Bank account.
+These questions will help you reset your password or username if needed.
+
+Your selected security questions are:
+- What was your first pet's name?
+- What was your best sport in primary school?
+
+Thank you for enhancing the security of your account with Python Bank - Your Future, Our Priority
+-------------------
+
+--- New Email ---
+Date: 2025-06-04
+Time: 19:55:27
+From: noreply@pythonbank.com
+To: alexmalunda@icloud.com
+Subject: Your Python Bank Account is Now Active! - Welcome!
+
+Dear AlexMalunda,
+
+Congratulations! Your Python Bank account has been successfully activated.
+
+Here are your account details:
+  Account Holder: AlexMalunda
+  Account Number: ACC2752954495
+  Account Type: PayGo account
+  Branch: Nairobi Main
+
+Features of your PayGo account:
+  - Currency: Ksh
+  - Opening Balance: 0
+  - Monthly Maintenance Fee: 0
+  - Minimum Balance: 0
+  - Bank Transfers Fees: 0.5
+  - Atm Withdrawal Charges: 0.3
+  - Free Monthly E-Statements: True
+  - Free Debit Mastercard: True
+  - Free Cheque Book: True
+
+We are thrilled to have you as part of the Python Bank family. Enjoy seamless banking with us!
+For any queries, please do not reply to this email. Contact our customer support directly.
+
+Thank you for choosing Python Bank - Your Future, Our Priority
+-------------------
+
+--- New Email ---
+Date: 2025-06-04
+Time: 20:59:50
+From: noreply@lafamiliabank.com
+To: alex@gmail.com
+Subject: Your La Familia Bank OTP for Account Registration
+
+Dear Alex Malunda,
+
+Your One-Time Password (OTP) for La Familia Bank account registration is: 638688
+This OTP is valid for 5 minutes and will expire at 21:04:50.
+Please do not share this OTP with anyone.
+
+Thank you for choosing La Familia Bank - Your Future, Our Priority
+-------------------
+
+--- New Email ---
+Date: 2025-06-05
+Time: 08:57:01
+From: noreply@lafamiliabank.com
+To: alexwangila@gmail.com
+Subject: Your La Familia Bank OTP for Account Registration
+
+Dear Wangila Alex,
+
+Your One-Time Password (OTP) for La Familia Bank account registration is: 056134
+This OTP is valid for 5 minutes and will expire at 09:02:01.
+Please do not share this OTP with anyone.
+
+Thank you for choosing La Familia Bank - Your Future, Our Priority
+-------------------
+
+--- New Email ---
+Date: 2025-06-05
+Time: 08:58:02
+From: noreply@lafamiliabank.com
+To: alexwangila@gmail.com
+Subject: La Familia Bank Security Questions Setup Confirmation
+
+Dear Wangila Alex,
+
+This is to confirm that your security questions have been successfully set up for your La Familia Bank account.
+These questions will help you reset your password or username if needed.
+
+Your selected security questions are:
+- What was your first pet's name?
+- What was your best sport in primary school?
+
+Thank you for enhancing the security of your account with La Familia Bank - Your Future, Our Priority
+-------------------
+
+--- New Email ---
+Date: 2025-06-05
+Time: 20:12:06
+From: noreply@lafamiliabank.com
+To: aslekiy@gmail.com
+Subject: Your La Familia Bank OTP for Account Registration
+
+Dear Asleki Wangila,
+
+Your One-Time Password (OTP) for La Familia Bank account registration is: 052800
+This OTP is valid for 5 minutes and will expire at 20:17:06.
+Please do not share this OTP with anyone.
+
+Thank you for choosing La Familia Bank - Your Future, Our Priority
+-------------------
+
+--- New Email for Wangila (OTP) ---
+Date and Time: 2025-06-05 20:39:42
+To: alexmalunda@gmail.com
+From: Inkom Emporium <no-reply@inkom.com>
+Subject: Your Account Verification Code
+
+Dear Wangila,
+
+Your One-Time Password (OTP) for account verification is: 310058
+
+This code is valid for 5 minutes.
+It will expire at: 2025-06-05 20:44:42
+
+Please use this code to complete your registration.
+Do not share this code with anyone.
+
+Thank you,
+The Inkom Emporium Team
+----------------------------
+
+--- New Email for Wangila (Welcome) ---
+Date and Time: 2025-06-05 20:40:01
+To: alexmalunda@gmail.com
+From: Inkom Emporium <no-reply@inkom.com>
+Subject: Welcome to Inkom Emporium! Your Exclusive Offers Await!
+
+Dear Wangila,
+
+Welcome to the Inkom Emporium family! We're thrilled to have you.
+
+As a new customer, you're eligible for some amazing offers:
+- 15% off your first order (code: NEWCUSTOMER15)
+- Free shipping on all orders over $50 for your first month!
+- Earn double loyalty points on select fresh produce this week.
+
+We hope you enjoy your shopping experience with us. Explore our wide range of products!
+
+Check your email regularly for more exciting deals and personalized recommendations.
+
+Happy Shopping!
+
+Sincerely,
+The Inkom Emporium Team
+----------------------------
+
+--- New Email for Wangila (Service Review) ---
+Date and Time: 2025-06-05 20:41:23
+To: placeholder@example.com
+From: Inkom Emporium <feedback@inkom.com>
+Subject: How Was Your Inkom Emporium Experience (Order #KER4327490)?
+
+Dear Wangila,
+
+Thank you for your recent purchase (Order #KER4327490) at Inkom Emporium!
+
+We hope you enjoyed your shopping experience. We'd love to hear your feedback
+so we can continue to improve our services.
+Please take a moment to complete our quick survey and provide a review:
+[Link to Survey - This is a placeholder]
+
+Your opinion matters to us!
+
+Sincerely,
+The Inkom Emporium Team
+----------------------------

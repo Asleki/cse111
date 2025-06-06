@@ -6,3 +6,19 @@ To: +254707176595
 From: Python Bank
 Message: Your Python Bank Payment Passcode verification OTP is: 197912. Do not share this code.
 -------------------
+
+--- New SMS ---
+Date: 2025-06-04
+Time: 19:55:27
+To: +254707176595
+From: Python Bank
+Message: Your Python Bank account (ACC2752954495) is active! To deposit, use Paybill 234765, Acc No: ACC2752954495. We are excited to serve you!
+-------------------
+
+--- New SMS ---
+Date: 2025-06-04
+Time: 19:58:49
+To: +254707176595
+From: Python Bank
+Message: Your Python Bank Payment Passcode verification OTP is: 353436. Do not share this code.
+-------------------

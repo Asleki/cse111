@@ -5,12 +5,12 @@ import os
 import time
 
 # --- Constants and Global Variables ---
-BANK_NAME = "Python Bank"
+BANK_NAME = "Python Bank Bank"
 BANK_TAGLINE = "Your Future, Our Priority"
 RED_X = "❌"
 GREEN_CHECKMARK = "✅"
 BLUE_INFO = "ℹ️"
-OUR_BRANCHES = ["Nairobi Main", "Mombasa Branch", "Kisumu Lakeside", "Nakuru Downtown"]
+OUR_BRANCHES = ["La Familia Nairobi Main", "La Familia Mombasa Branch", "La Familia Kisumu Lakeside", "Nakuru Downtown"]
 EMAIL_INBOX_FILE = "email_inbox.txt"
 MESSAGES_INBOX_FILE = "messages_inbox.txt"
 ACCOUNTS_FILE = "bank_accounts.csv"

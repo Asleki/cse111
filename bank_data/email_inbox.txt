@@ -1,0 +1,16 @@
+--- 2025-06-05 20:17:50 ---
+From: noreply@pythonbank.com
+To: malundawangila@gmail.com
+Subject: Python Bank OTP Verification
+Body:
+Dear Wangila Malunda,
+
+Your One-Time Passcode (OTP) for Python Bank is: [1m815458[0m
+
+This OTP is valid for 5 minutes and will expire at 20:22:50.
+Please do not share this code with anyone.
+
+Thank you,
+The Python Bank Team.
+------------------------------
+
