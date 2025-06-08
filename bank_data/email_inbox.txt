@@ -14,3 +14,274 @@ Thank you,
 The Python Bank Team.
 ------------------------------
 
+--- 2025-06-06 18:40:41 ---
+From: support@pythonbank.com
+To: alex@gmail.com
+Subject: Python Bank Account Application Form
+Body:
+Dear Applicant,
+
+Thank you for your interest in opening an account with Python Bank.
+Attached to this email is your application form. Please download, fill it carefully, and scan the completed form back to us via email or visit your nearest branch.
+
+Required documents typically include:
+- Copy of National ID/Passport
+- KRA PIN Certificate
+- Proof of Address (e.g., utility bill)
+- Passport size photo
+
+We look forward to serving you!
+
+Sincerely,
+The Python Bank Team.
+------------------------------
+
+--- 2025-06-06 19:09:00 ---
+From: support@pythonbank.com
+To: a@gmail.com
+Subject: Python Bank Account Application Form
+Body:
+Dear Applicant,
+
+Thank you for your interest in opening an account with Python Bank.
+Attached to this email is your application form. Please download, fill it carefully, and scan the completed form back to us via email or visit your nearest branch.
+
+Required documents typically include:
+- Copy of National ID/Passport
+- KRA PIN Certificate
+- Proof of Address (e.g., utility bill)
+- Passport size photo
+
+We look forward to serving you!
+
+Sincerely,
+The Python Bank Team.
+------------------------------
+
+--- 2025-06-06 19:14:28 ---
+From: noreply@pythonbank.com
+To: awangila@gmail.com
+Subject: Python Bank OTP Verification
+Body:
+Dear Wangila Malunda,
+
+Your One-Time Passcode (OTP) for Python Bank is: [1m063957[0m
+
+This OTP is valid for 5 minutes and will expire at 19:19:28.
+Please do not share this code with anyone.
+
+Thank you,
+The Python Bank Team.
+------------------------------
+
+--- 2025-06-06 19:25:08 ---
+From: noreply@pythonbank.com
+To: wangila@gmail.com
+Subject: Python Bank OTP Verification
+Body:
+Dear Asleki Wangila,
+
+Your One-Time Passcode (OTP) for Python Bank is: [1m6018[0m
+
+This OTP is valid for 5 minutes and will expire at 19:30:08.
+Please do not share this code with anyone.
+
+Thank you,
+The Python Bank Team.
+------------------------------
+
+--- 2025-06-06 19:25:55 ---
+From: security@pythonbank.com
+To: wangila@gmail.com
+Subject: Python Bank Security Questions Setup Confirmation
+Body:
+Dear Asleki Wangila,
+
+This email confirms that you have successfully set up your security questions for your Python Bank account.
+Your chosen questions and answers (for your reference, do not share):
+- Question: What is your mother's maiden name?
+   Answer: Naumi
+- Question: What was the name of your first pet?
+   Answer: Ronex
+
+These questions will be used to verify your identity if you ever need to reset your password or perform sensitive account operations.
+
+If you did not make these changes, please contact us immediately.
+
+Sincerely,
+The Python Bank Security Team.
+------------------------------
+
+--- 2025-06-06 19:28:49 ---
+From: transactions@pythonbank.com
+To: wangila@gmail.com
+Subject: Python Bank Transaction Alert: Deposit
+Body:
+Dear Asleki Wangila,
+
+A deposit of 76.00 USD has occurred on your account.
+
+Date/Time: 2025-06-06 19:28:49
+Reference: TRX-20250606192841-9655
+Description: Deposit from M-Pesa
+New Balance: 76.00 USD
+
+Thank you for banking with Python Bank.
+
+------------------------------
+
+--- 2025-06-06 19:48:51 ---
+From: noreply@pythonbank.com
+To: al@email.com
+Subject: Python Bank OTP Verification
+Body:
+Dear Alex Malundak,
+
+Your One-Time Passcode (OTP) for Python Bank is: [1m3380[0m
+
+This OTP is valid for 5 minutes and will expire at 19:53:51.
+Please do not share this code with anyone.
+
+Thank you,
+The Python Bank Team.
+------------------------------
+
+--- 2025-06-06 19:49:21 ---
+From: accounts@pythonbank.com
+To: al@email.com
+Subject: Python Bank Account Activated: Welcome!
+Body:
+Dear Alex Malundak,
+
+Congratulations! Your Python Bank account has been successfully created and activated.
+
+Account Details:
+   Account Number: ACC538182
+   Account Type: N/A
+   Currency: N/A
+   Branch: Eldoret Branch
+
+You can now log in to your online banking portal to manage your finances, view statements, and explore our services.
+
+Welcome to the Python Bank family!
+
+Sincerely,
+The Python Bank Team.
+------------------------------
+
+--- 2025-06-06 21:01:55 ---
+From: noreply@lafamiliabank.com
+To: alex@gmail.com
+Subject: La Familia Bank OTP Verification
+Body:
+Dear Malunda Wangila,
+
+Your One-Time Passcode (OTP) for La Familia Bank is: [1m1372[0m
+
+This OTP is valid for 5 minutes and will expire at 21:06:55.
+Please do not share this code with anyone.
+
+Thank you,
+The La Familia Bank Team.
+------------------------------
+
+--- 2025-06-06 21:02:16 ---
+From: security@lafamiliabank.com
+To: alex@gmail.com
+Subject: La Familia Bank Security Questions Setup Confirmation
+Body:
+Dear Malunda Wangila,
+
+This email confirms that you have successfully set up your security questions for your La Familia Bank account.
+Your chosen questions and answers (for your reference, do not share):
+- Question: What is your mother's maiden name?
+   Answer: naumi
+- Question: What was the name of your first pet?
+   Answer: ronny
+
+These questions will be used to verify your identity if you ever need to reset your password or perform sensitive account operations.
+
+If you did not make these changes, please contact us immediately.
+
+Sincerely,
+The La Familia Bank Security Team.
+------------------------------
+
+--- 2025-06-07 16:07:59 ---
+From: noreply@lafamiliabank.com
+To: alfredosore99@gmail.com
+Subject: La Familia Bank OTP Verification
+Body:
+Dear Alfred Osore,
+
+Your One-Time Passcode (OTP) for La Familia Bank is: [1m2154[0m
+
+This OTP is valid for 5 minutes and will expire at 16:12:59.
+Please do not share this code with anyone.
+
+Thank you,
+The La Familia Bank Team.
+------------------------------
+
+--- 2025-06-07 16:10:01 ---
+From: security@lafamiliabank.com
+To: alfredosore99@gmail.com
+Subject: La Familia Bank Security Questions Setup Confirmation
+Body:
+Dear Alfred Osore,
+
+This email confirms that you have successfully set up your security questions for your La Familia Bank account.
+Your chosen questions and answers (for your reference, do not share):
+- Question: What is your mother's maiden name?
+   Answer: Esther
+- Question: What was the name of your first pet?
+   Answer: Ronex
+
+These questions will be used to verify your identity if you ever need to reset your password or perform sensitive account operations.
+
+If you did not make these changes, please contact us immediately.
+
+Sincerely,
+The La Familia Bank Security Team.
+------------------------------
+
+--- 2025-06-07 16:12:45 ---
+From: transactions@lafamiliabank.com
+To: alfredosore99@gmail.com
+Subject: La Familia Bank Transaction Alert: Deposit
+Body:
+Dear Alfred Osore,
+
+A deposit of 79.00 GBP has occurred on your account.
+
+Date/Time: 2025-06-07 16:12:45
+Reference: TRX-20250607161144-3495
+Description: Deposit from Default Test Wallet
+New Balance: 79.00 GBP
+
+Thank you for banking with La Familia Bank.
+
+------------------------------
+
+--- 2025-06-07 23:43:13 ---
+From: support@lafamiliabank.com
+To: alex@icloud.com
+Subject: La Familia Bank Account Application Form
+Body:
+Dear Applicant,
+
+Thank you for your interest in opening an account with La Familia Bank.
+Attached to this email is your application form. Please download, fill it carefully, and scan the completed form back to us via email or visit your nearest branch.
+
+Required documents typically include:
+- Copy of National ID/Passport
+- KRA PIN Certificate
+- Proof of Address (e.g., utility bill)
+- Passport size photo
+
+We look forward to serving you!
+
+Sincerely,
+The La Familia Bank Team.
+------------------------------
+

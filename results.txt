@@ -323,3 +323,40 @@ Uses:
 
 --------------------------------------------------
 
+Time: 02:03pm
+Formula: CH3(CH2)6CH3
+Name: octane
+Molar Mass: 114.22852 g/mol
+Atomic Details:
+   C (Carbon), Atomic Number: 6, Quantity: 8
+   H (Hydrogen), Atomic Number: 1, Quantity: 18
+Molecular Weight Breakdown:
+   C: 8 × 12.01070 = 96.08560
+   H: 18 × 1.00794 = 18.14292
+Percent Composition:
+   C: 84.12%
+   H: 15.88%
+Uses:
+   - Fuel
+   - Solvent
+   - Hydrocarbon research
+   - Combustion studies
+   - Petrochemicals
+
+--------------------------------------------------
+
+Time: 02:06pm
+Formula: V
+Name: unknown compound
+Molar Mass: 50.94150 g/mol
+Atomic Details:
+   V (Vanadium), Atomic Number: 23, Quantity: 1
+Molecular Weight Breakdown:
+   V: 1 × 50.94150 = 50.94150
+Percent Composition:
+   V: 100.00%
+Uses:
+   - No specific uses found for this compound.
+
+--------------------------------------------------
+

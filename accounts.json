@@ -1,0 +1,49 @@
+{
+    "Alwa": {
+        "password": "37696312",
+        "balance": 500000.0,
+        "activated": true,
+        "details": {
+            "name": "Alex Wangil",
+            "username": "Alwa",
+            "email": "alex@icloud.com",
+            "phone_number": "2543654372",
+            "account_number": "6795766973",
+            "account_type_name": "Fixed Deposit Account",
+            "account_currency": "KES",
+            "account_creation_date": "2025-06-06",
+            "account_type_features": {
+                "Account Name": "Fixed Deposit Account",
+                "Currency": "KES",
+                "Minimum Deposit": "KES 50,000",
+                "Interest Rate": "8-12% P.A. (based on tenor)",
+                "Features": [
+                    "Higher Interest Rates",
+                    "Flexible Tenors (3, 6, 12, 24 months)",
+                    "Loan Against Deposit"
+                ],
+                "Opening balance": 50000
+            },
+            "monthly_maintenance_fee": 0,
+            "statements": [
+                {
+                    "timestamp": "2025-06-06 20:55:43",
+                    "type": "Deposit",
+                    "amount": 500000.0,
+                    "currency": "KES",
+                    "reference_number": "354828342079",
+                    "description": "Initial Deposit for Account Activation",
+                    "running_balance": 500000.0
+                }
+            ],
+            "payment_methods": [],
+            "cards": [],
+            "card_pins": {},
+            "beneficiaries": {},
+            "loan_limit": 0.0,
+            "active_loans": 0.0,
+            "last_loan_limit_update": null,
+            "payment_passcode": null
+        }
+    }
+}

@@ -6,7 +6,7 @@ import re
 import time # For simulating delays
 
 # --- Global Constants and Configuration ---
-BANK_NAME = "Python Bank"
+BANK_NAME = "La Familia Bank"
 BANK_TAGLINE = "Your Trusted Digital Financial Partner"
 DATA_DIR = "bank_data"
 ACCOUNTS_FILE = os.path.join(DATA_DIR, "accounts.json")
@@ -17,13 +17,21 @@ SMS_LOG_FILE = os.path.join(DATA_DIR, "sms_log.txt")
 # Ensure data directory exists
 os.makedirs(DATA_DIR, exist_ok=True)
 
+# Ensure inbox files exist inside the DATA_DIR
+if not os.path.exists(EMAIL_INBOX_FILE):
+    with open(EMAIL_INBOX_FILE, 'w') as f:
+        pass # Create an empty email inbox file
+if not os.path.exists(SMS_LOG_FILE):
+    with open(SMS_LOG_FILE, 'w') as f:
+        pass # Create an empty SMS log file
+
 OUR_BRANCHES = [
-    "Head Office Branch (Nairobi)",
-    "Mombasa Branch",
-    "Kisumu Branch",
-    "Nakuru Branch",
-    "Eldoret Branch",
-    "Thika Branch"
+    "La Familia Bank Head Office Branch (Nairobi)",
+    "La Familia Bank Mombasa Branch",
+    "La Familia Bank Kisumu Branch",
+    "La Familia Bank Nakuru Branch",
+    "La Familia BankEldoret Branch",
+    "La Familia Bank Thika Branch"
 ]
 
 SECURITY_QUESTIONS = {
@@ -79,6 +87,74 @@ CYAN = "\033[36m"
 GREEN_CHECKMARK = f"{GREEN}\u2713{RESET}" # Green checkmark
 RED_X = f"{RED}\u2717{RESET}"             # Red X
 BLUE_INFO = f"{BLUE}i{RESET}"             # Blue info icon
+
+# --- Comprehensive ANSI Escape Codes for Terminal Styling ---
+
+# Reset to default
+RESET = "\033[0m"
+
+# --- Basic Text Styles ---
+BOLD = "\033[1m"       # Bold or increased intensity
+FAINT = "\033[2m"      # Faint (decreased intensity), not widely supported
+ITALIC = "\033[3m"     # Italic, not widely supported
+UNDERLINE = "\033[4m"  # Underline
+BLINK = "\033[5m"      # Slow blink, not widely supported
+FAST_BLINK = "\033[6m" # Fast blink, not widely supported
+INVERSE = "\033[7m"    # Swap foreground and background colors
+HIDDEN = "\033[8m"     # Conceal characters (invisible)
+STRIKETHROUGH = "\033[9m" # Strikethrough, not widely supported
+
+# --- Text Color (Foreground) ---
+BLACK = "\033[30m"
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+BLUE = "\033[34m"
+MAGENTA = "\033[35m"
+CYAN = "\033[36m"
+WHITE = "\033[37m"
+
+# --- Bright Text Color (Foreground - often supported as 'bright' versions of basic colors) ---
+BRIGHT_BLACK = "\033[90m"
+BRIGHT_RED = "\033[91m"
+BRIGHT_GREEN = "\033[92m"
+BRIGHT_YELLOW = "\033[93m"
+BRIGHT_BLUE = "\033[94m"
+BRIGHT_MAGENTA = "\033[95m"
+BRIGHT_CYAN = "\033[96m"
+BRIGHT_WHITE = "\033[97m"
+
+# --- Background Color ---
+BG_BLACK = "\033[40m"
+BG_RED = "\033[41m"
+BG_GREEN = "\033[42m"
+BG_YELLOW = "\033[43m"
+BG_BLUE = "\033[44m"
+BG_MAGENTA = "\033[45m"
+BG_CYAN = "\033[46m"
+BG_WHITE = "\033[47m"
+
+# --- Bright Background Color ---
+BG_BRIGHT_BLACK = "\033[100m"
+BG_BRIGHT_RED = "\033[101m"
+BG_BRIGHT_GREEN = "\033[102m"
+BG_BRIGHT_YELLOW = "\033[103m"
+BG_BRIGHT_BLUE = "\033[104m"
+BG_BRIGHT_MAGENTA = "\033[105m"
+BG_BRIGHT_CYAN = "\033[106m"
+BG_BRIGHT_WHITE = "\033[107m"
+
+# --- Common Cursor/Screen Control (Less for direct "styling" but related to terminal output) ---
+# HIDE_CURSOR = "\033[?25l"
+# SHOW_CURSOR = "\033[?25h"
+# CLEAR_SCREEN = "\033[2J"  # Clear entire screen
+# CLEAR_LINE = "\033[2K"    # Clear current line
+
+# --- Derived Symbols (as you've used) ---
+# These combine a color and a unicode character with RESET
+# GREEN_CHECKMARK = f"{GREEN}\u2713{RESET}" # Green checkmark
+# RED_X = f"{RED}\u2717{RESET}"             # Red X
+# BLUE_INFO = f"{BLUE}i{RESET}"             # Blue info icon
 
 # --- File Operations ---
 
@@ -176,8 +252,9 @@ def is_valid_email(email):
     """Basic validation for email format."""
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
 
-def generate_otp(length=6):
-    """Generates a random numeric OTP."""
+# Modified generate_otp to produce a 4-digit code as requested
+def generate_otp(length=4):
+    """Generates a random numeric OTP of specified length (defaulting to 4)."""
     return ''.join(random.choices('0123456789', k=length))
 
 def generate_reference_number():
@@ -201,21 +278,15 @@ def convert_currency(amount, from_currency, to_currency):
             return amount * EXCHANGE_RATES[from_currency][to_currency]
 
         # Convert via USD as an intermediary if direct path not found
-        # This assumes all currencies can be converted to/from USD.
-        # This logic should be more robust in a real system.
         if from_currency in ["BTC", "ETH", "SOL"]:
-            # Convert crypto to USD first
             amount_in_usd = amount * EXCHANGE_RATES[from_currency]["USD"]
             if to_currency == "USD":
                 return amount_in_usd
             else:
-                # Then convert from USD to target fiat
                 return amount_in_usd * EXCHANGE_RATES["USD"][to_currency]
         
         if to_currency in ["BTC", "ETH", "SOL"]:
-            # Convert source fiat to USD first
             amount_in_usd = amount * EXCHANGE_RATES[from_currency]["USD"]
-            # Then convert from USD to target crypto
             return amount_in_usd / EXCHANGE_RATES[to_currency]["USD"] # Inverted for USD to Crypto
 
         # For fiat-to-fiat, if direct path not found, go via USD
@@ -237,14 +308,20 @@ def convert_currency(amount, from_currency, to_currency):
 
 def _log_communication(log_file, sender, recipient, subject, body):
     """Helper to log emails/SMS to a file."""
-    with open(log_file, 'a') as f:
-        f.write(f"--- {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---\n")
-        f.write(f"From: {sender}\n")
-        f.write(f"To: {recipient}\n")
-        if subject:
-            f.write(f"Subject: {subject}\n")
-        f.write(f"Body:\n{body}\n")
-        f.write("-" * 30 + "\n\n")
+    try:
+        with open(log_file, 'a') as f:
+            f.write(f"--- {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---\n")
+            f.write(f"From: {sender}\n")
+            f.write(f"To: {recipient}\n")
+            if subject:
+                f.write(f"Subject: {subject}\n")
+            f.write(f"Body:\n{body}\n")
+            f.write("-" * 30 + "\n\n")
+    except IOError as e:
+        print(f"{RED_X} ERROR: Could not write to communication log file '{log_file}'. Check permissions or path: {e}")
+    except Exception as e:
+        print(f"{RED_X} An unexpected error occurred during communication logging: {e}")
+
 
 def send_otp_email(name, email, otp, expiry_time):
     """Simulates sending an OTP email."""
@@ -306,7 +383,7 @@ def send_security_questions_email(name, email, questions):
     )
     for q, a in questions.items():
         body += f"- Question: {q}\n"
-        body += f"  Answer: {a}\n" # In a real system, answers would be hashed.
+        body += f"   Answer: {a}\n" # In a real system, answers would be hashed.
     body += (
         f"\nThese questions will be used to verify your identity if you ever need to reset your password or "
         f"perform sensitive account operations.\n\n"
@@ -325,10 +402,10 @@ def send_account_activation_email(username, email, account_number, account_type_
         f"Dear {username},\n\n"
         f"Congratulations! Your {BANK_NAME} account has been successfully created and activated.\n\n"
         f"Account Details:\n"
-        f"  Account Number: {account_number}\n"
-        f"  Account Type: {account_type_details.get('Account Name', 'N/A')}\n"
-        f"  Currency: {account_type_details.get('Currency', 'N/A')}\n"
-        f"  Branch: {branch_name}\n\n"
+        f"   Account Number: {account_number}\n"
+        f"   Account Type: {account_type_details.get('Account Name', 'N/A')}\n"
+        f"   Currency: {account_type_details.get('Currency', 'N/A')}\n"
+        f"   Branch: {branch_name}\n\n"
         f"You can now log in to your online banking portal to manage your finances, "
         f"view statements, and explore our services.\n\n"
         f"Welcome to the {BANK_NAME} family!\n\n"
@@ -403,211 +480,337 @@ def send_loan_disbursement_notification(username, email, phone_number, loan_amou
     _log_communication(SMS_LOG_FILE, sender_sms, phone_number, None, sms_body)
     print(f"{GREEN_CHECKMARK} Loan disbursement notification sent to {email} and {phone_number}.")
 
+# --- NEW OTP VERIFICATION FUNCTION ---
+def verify_otp_with_retries(target_name, contact_info, generated_otp, otp_expiry_time, max_retries=3, otp_delivery_method="email"):
+    """
+    Verifies an OTP, allowing a specified number of retries for incorrect input.
 
-# --- Display Menus ---
+    Args:
+        target_name (str): The name of the customer/recipient.
+        contact_info (str): The email address or phone number the OTP was sent to.
+        generated_otp (str): The actual OTP that was sent.
+        otp_expiry_time (datetime.datetime): When the OTP expires.
+        max_retries (int): Maximum number of attempts allowed.
+        otp_delivery_method (str): "email" or "sms" to differentiate messages (optional).
+
+    Returns:
+        bool: True if OTP is successfully verified, False otherwise (expired or too many wrong attempts).
+        str: 'P' or 'M' if user selects those options.
+    """
+    attempts = 0
+    while attempts < max_retries:
+        if datetime.datetime.now() > otp_expiry_time:
+            print(f"{RED_X} OTP has expired. Please request a new OTP.")
+            return False # OTP expired, verification failed
+
+        prompt = f"Enter the {otp_delivery_method} OTP ({max_retries - attempts} attempts left, P/M to go back): "
+        user_otp = get_user_input(prompt, type=str) # OTPs are strings
+
+        if user_otp in ['P', 'M']:
+            return user_otp # User wants to go back or to main menu
+
+        # Validate that the user_otp is digits only if your OTPs are purely numeric
+        if not user_otp.isdigit() or len(user_otp) != len(generated_otp):
+            print(f"{RED_X} Invalid OTP format. Please enter a {len(generated_otp)}-digit number.")
+            attempts += 1 # Count as an attempt even if format is wrong
+            continue # Continue to the next loop iteration
+
+        if user_otp == generated_otp:
+            print(f"{GREEN_CHECKMARK} OTP verified successfully!")
+            return True # OTP is correct
+        else:
+            attempts += 1
+            if attempts < max_retries:
+                print(f"{RED_X} Incorrect OTP. Please try again.")
+            else:
+                print(f"{RED_X} Too many incorrect OTP attempts. For security, the verification process has been cancelled.")
+                print(f"{BLUE_INFO} Please restart the process or contact support if you need assistance.")
+                return False # Too many wrong attempts, verification failed
+
+    return False # Fallback, should ideally be caught by max_retries check
+
+
+# --- Placeholder Function for New Account Registration ---
+def register_new_account():
+    clear_screen()
+    print(f"{BOLD}{BLUE_INFO}--- New Account Registration ---{RESET}")
+
+    customer_name = get_user_input("Enter your full name (P/M to go back): ")
+    if customer_name in ['P', 'M']: return customer_name
+
+    customer_email = get_user_input("Enter your email address: ")
+    if customer_email in ['P', 'M']: return customer_email
+    if not is_valid_email(customer_email):
+        print(f"{RED_X} Invalid email format. Please enter a valid email address.")
+        time.sleep(2)
+        return False # Indicate failure, user can try again from main menu
+
+    customer_phone = get_user_input("Enter your phone number (e.g., +254...): ")
+    if customer_phone in ['P', 'M']: return customer_phone
+    # Add phone number validation if needed
+
+    # --- OTP Sending and Verification ---
+    print(f"\n{BLUE_INFO} Sending OTP to {customer_email} for verification...{RESET}")
+    otp_code = generate_otp(length=4) # Using the simpler 4-digit OTP
+    otp_expiry = datetime.datetime.now() + datetime.timedelta(minutes=5)
+
+    # For testing, display the OTP (REMOVE IN REAL APP)
+    print(f"{YELLOW}DEBUG: The generated OTP is: {otp_code}{RESET}")
+    send_otp_email(customer_name, customer_email, otp_code, otp_expiry)
+
+    otp_verified = verify_otp_with_retries(
+        target_name=customer_name,
+        contact_info=customer_email,
+        generated_otp=otp_code,
+        otp_expiry_time=otp_expiry,
+        max_retries=3, # User gets 3 attempts
+        otp_delivery_method="email"
+    )
+
+    if otp_verified == True:
+        print(f"\n{GREEN_CHECKMARK} OTP successfully verified. Proceeding with account setup...{RESET}")
+        # In a real system, you would now collect more details (password, account type, etc.)
+        # and then call send_account_activation_email and send_activation_sms
+        # For this example, we'll just simulate completion:
+        print(f"{GREEN_CHECKMARK} Account registration process complete! (conceptually){RESET}")
+        time.sleep(2)
+        return True # Indicate successful registration completion
+    elif otp_verified in ['P', 'M']:
+        print(f"{BLUE_INFO} OTP verification cancelled. Returning to previous menu.{RESET}")
+        time.sleep(2)
+        return otp_verified # Propagate 'P' or 'M'
+    else: # otp_verified is False (expired or too many failed attempts)
+        print(f"{RED_X} Account registration aborted due to OTP verification failure.{RESET}")
+        time.sleep(2)
+        return False # Indicate failure
+
+
+# --- Main Application Loop ---
+def main():
+    while True:
+        clear_screen()
+        print(f"\033[33m{BOLD}=\033[0m" * 50) # Top border
+        print(f"{BOLD}\033[34m--- {BANK_NAME} Main Menu ---{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+        print(f"\033[33m{BOLD}=\033[0m" * 50) # Bottom border
+        print(f"\033[3m\033[34m{BANK_TAGLINE}\033[0m\n") # Italic blue tagline
+
+        print(f"\033[32m1. Register New Account\033[0m") # Green text
+        print(f"\033[32m2. Login (Not Implemented)\033[0m") # Green text
+        print(f"\033[32m3. Delete All Data (For Testing)\033[0m") # Green text
+        print(f"\033[32m4. Exit\033[0m") # Green text
+        print(f"\033[33m-\033[0m" * 30) # Yellow separator
+
+        choice = get_user_input(f"\033[90mEnter your choice: \033[0m", int) # Faint input prompt
+
+        if choice == 1:
+            reg_status = register_new_account()
+            get_user_input(f"\n\033[90mPress Enter to continue to Main Menu...\033[0m") # Faint input prompt
+            continue
+        elif choice == 2:
+            print(f"\033[34mi\033[0m Login functionality is not yet implemented. Please register first.{RESET}") # Blue info symbol
+            time.sleep(2)
+        elif choice == 3:
+            print(f"\033[31m\u2717\033[0m Delete All Data (For Testing)...{RESET}") # Red X symbol
+            delete_all_data()
+            get_user_input(f"\033[90mPress Enter to continue...\033[0m") # Faint input prompt
+        elif choice == 4:
+            print(f"\033[34mi\033[0m Thank you for choosing {BANK_NAME}. Goodbye!{RESET}") # Blue info symbol
+            break
+        else:
+            print(f"\033[31m\u2717\033[0m Invalid choice. Please enter a number from the menu.{RESET}") # Red X symbol
+            time.sleep(2)
+
 
 def display_main_menu(logged_in):
-    """Displays the main menu based on login status."""
     clear_screen()
-    print("\n" + "=" * 50)
-    print(f"{BANK_NAME} - {BANK_TAGLINE}".center(50))
-    print("=" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34m{BANK_NAME} - {BANK_TAGLINE}{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
     if logged_in:
-        print("1. Account Services")
-        print("2. Explore Our Offers")
-        print("3. Logout")
-        print("4. Exit Application")
+        print(f"\033[32m1. Account Services\033[0m") # Green text
+        print(f"\033[32m2. Explore Our Offers\033[0m") # Green text
+        print(f"\033[32m3. Logout\033[0m") # Green text
+        print(f"\033[32m4. Exit Application\033[0m") # Green text
     else:
-        print("1. Open a Bank Account")
-        print("2. Explore Our Offers")
-        print("3. Login")
-        print("4. Exit Application")
-    print("-" * 50)
+        print(f"\033[32m1. Open a Bank Account\033[0m") # Green text
+        print(f"\033[32m2. Explore Our Offers\033[0m") # Green text
+        print(f"\033[32m3. Login\033[0m") # Green text
+        print(f"\033[32m4. Exit Application\033[0m") # Green text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_account_opening_menu():
-    """Displays the menu for account opening options."""
     clear_screen()
-    print("\n" + "=" * 50)
-    print("Open a Bank Account".center(50))
-    print("=" * 50)
-    print("1. Apply Online (Receive application form via email)")
-    print("2. Visit Nearest Bank Branch (Get a token for in-person service)")
-    print("P. Go back to previous menu")
-    print("M. Go to main menu")
-    print("-" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mOpen a Bank Account{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"\033[32m1. Apply Online (Receive application form via email)\033[0m") # Green text
+    print(f"\033[32m2. Visit Nearest Bank Branch (Get a token for in-person service)\033[0m") # Green text
+    print(f"\033[33mP. Go back to previous menu\033[0m") # Yellow text
+    print(f"\033[33mM. Go to main menu\033[0m") # Yellow text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_offers_menu():
-    """Displays the menu for exploring bank offers."""
     clear_screen()
-    print("\n" + "=" * 50)
-    print("Explore Our Offers".center(50))
-    print("=" * 50)
-    print("1. Bank Accounts")
-    print("2. Our Cards")
-    print("3. ATM Locator")
-    print("P. Go back to previous menu")
-    print("M. Go to main menu")
-    print("-" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mExplore Our Offers{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"\033[32m1. Bank Accounts\033[0m") # Green text
+    print(f"\033[32m2. Our Cards\033[0m") # Green text
+    print(f"\033[32m3. ATM Locator\033[0m") # Green text
+    print(f"\033[33mP. Go back to previous menu\033[0m") # Yellow text
+    print(f"\033[33mM. Go to main menu\033[0m") # Yellow text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_bank_accounts_menu():
-    """Displays the types of bank accounts offered."""
     clear_screen()
-    print("\n" + "=" * 50)
-    print("Bank Accounts".center(50))
-    print("=" * 50)
-    print("1. Current Bank Account")
-    print("2. Club Account")
-    print("3. PayGo Account")
-    print("4. Sapphire Multi Currency Account")
-    print("P. Go back to previous menu")
-    print("M. Go to main menu")
-    print("-" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mBank Accounts{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"\033[32m1. Current Bank Account\033[0m") # Green text
+    print(f"\033[32m2. Club Account\033[0m") # Green text
+    print(f"\033[32m3. PayGo Account\033[0m") # Green text
+    print(f"\033[32m4. Sapphire Multi Currency Account\033[0m") # Green text
+    print(f"\033[33mP. Go back to previous menu\033[0m") # Yellow text
+    print(f"\033[33mM. Go to main menu\033[0m") # Yellow text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_cards_menu():
-    """Displays the categories of cards offered."""
     clear_screen()
-    print("\n" + "=" * 50)
-    print("Our Cards".center(50))
-    print("=" * 50)
-    print("1. Debit Cards")
-    print("2. Prepaid Cards")
-    print("3. Credit Cards")
-    print("P. Go back to previous menu")
-    print("M. Go to main menu")
-    print("-" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mOur Cards{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"\033[32m1. Debit Cards\033[0m") # Green text
+    print(f"\033[32m2. Prepaid Cards\033[0m") # Green text
+    print(f"\033[32m3. Credit Cards\033[0m") # Green text
+    print(f"\033[33mP. Go back to previous menu\033[0m") # Yellow text
+    print(f"\033[33mM. Go to main menu\033[0m") # Yellow text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_debit_cards():
     clear_screen()
-    print("\n" + "=" * 50)
-    print("Debit Cards".center(50))
-    print("=" * 50)
-    print("1. Club Debit MasterCard")
-    print("2. Debit Visa")
-    print("3. Gold MasterCard")
-    print("P. Go back to previous menu")
-    print("M. Go to main menu")
-    print("-" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mDebit Cards{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"\033[32m1. Club Debit MasterCard\033[0m") # Green text
+    print(f"\033[32m2. Debit Visa\033[0m") # Green text
+    print(f"\033[32m3. Gold MasterCard\033[0m") # Green text
+    print(f"\033[33mP. Go back to previous menu\033[0m") # Yellow text
+    print(f"\033[33mM. Go to main menu\033[0m") # Yellow text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_prepaid_cards():
     clear_screen()
-    print("\n" + "=" * 50)
-    print("Prepaid Cards".center(50))
-    print("=" * 50)
-    print("1. Multi Currency Prepaid MasterCard")
-    print("2. Sapphire Prepaid Visa")
-    print("3. Safari Prepaid Visa")
-    print("P. Go back to previous menu")
-    print("M. Go to main menu")
-    print("-" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mPrepaid Cards{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"\033[32m1. Multi Currency Prepaid MasterCard\033[0m") # Green text
+    print(f"\033[32m2. Sapphire Prepaid Visa\033[0m") # Green text
+    print(f"\033[32m3. Safari Prepaid Visa\033[0m") # Green text
+    print(f"\033[33mP. Go back to previous menu\033[0m") # Yellow text
+    print(f"\033[33mM. Go to main menu\033[0m") # Yellow text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_credit_cards():
     clear_screen()
-    print("\n" + "=" * 50)
-    print("Credit Cards".center(50))
-    print("=" * 50)
-    print("1. Gold Visa Credit Card")
-    print("2. Bronze Credit MasterCard")
-    print("3. Diamond Credit Card")
-    print("P. Go back to previous menu")
-    print("M. Go to main menu")
-    print("-" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mCredit Cards{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"\033[32m1. Gold Visa Credit Card\033[0m") # Green text
+    print(f"\033[32m2. Bronze Credit MasterCard\033[0m") # Green text
+    print(f"\033[32m3. Diamond Credit Card\033[0m") # Green text
+    print(f"\033[33mP. Go back to previous menu\033[0m") # Yellow text
+    print(f"\033[33mM. Go to main menu\033[0m") # Yellow text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_token_machine_menu():
-    """Displays the menu for the token machine services."""
     clear_screen()
-    print("\n" + "=" * 50)
-    print("Select Service".center(50))
-    print("=" * 50)
-    print("1. Open a New Bank Account")
-    print("2. Close a Bank Account")
-    print("3. Reactivate A Bank Account")
-    print("4. Statement Enquiry")
-    print("5. Cheque Book")
-    print("6. Cheque Deposit")
-    print("7. Cash Withdrawal")
-    print("8. Cash Deposit")
-    print("9. Currency Conversion")
-    print("P. Go back to previous menu")
-    print("M. Go to main menu")
-    print("-" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mSelect Service{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"\033[32m1. Open a New Bank Account\033[0m") # Green text
+    print(f"\033[32m2. Close a Bank Account\033[0m") # Green text
+    print(f"\033[32m3. Reactivate A Bank Account\033[0m") # Green text
+    print(f"\033[32m4. Statement Enquiry\033[0m") # Green text
+    print(f"\033[32m5. Cheque Book\033[0m") # Green text
+    print(f"\033[32m6. Cheque Deposit\033[0m") # Green text
+    print(f"\033[32m7. Cash Withdrawal\033[0m") # Green text
+    print(f"\033[32m8. Cash Deposit\033[0m") # Green text
+    print(f"\033[32m9. Currency Conversion\033[0m") # Green text
+    print(f"\033[33mP. Go back to previous menu\033[0m") # Yellow text
+    print(f"\033[33mM. Go to main menu\033[0m") # Yellow text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_atm_locations_menu():
-    """Displays the ATM locations menu for a selected bank branch."""
     clear_screen()
-    print("\n" + "=" * 50)
-    print("ATM Locations".center(50))
-    print("=" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mATM Locations{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
     for i, branch_name in enumerate(OUR_BRANCHES, 1):
-        print(f"{i}. {branch_name}")
-    print("P. Go back to previous menu")
-    print("M. Go to main menu")
-    print("-" * 50)
+        print(f"\033[32m{i}. {branch_name}\033[0m") # Green text
+    print(f"\033[33mP. Go back to previous menu\033[0m") # Yellow text
+    print(f"\033[33mM. Go to main menu\033[0m") # Yellow text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_account_services_menu():
-    """Displays the menu for account services."""
     clear_screen()
-    print("\n" + "=" * 50)
-    print("Account Services".center(50))
-    print("=" * 50)
-    print("1. View Account Details")
-    print("2. Make a Deposit")
-    print("3. Make a Withdrawal")
-    print("4. View Transaction History")
-    print("5. My Statements")
-    print("6. Add/Manage Payment Methods")
-    print("7. Manage Cards")
-    print("8. Request Services") # General placeholder for new services
-    print("9. Make Payments (Transfers to external methods)")
-    print("10. Check Loan Balance/Limit & Request Loan")
-    print("11. Logout")
-    print("-" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mAccount Services{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"\033[32m1. View Account Details\033[0m") # Green text
+    print(f"\033[32m2. Make a Deposit\033[0m") # Green text
+    print(f"\033[32m3. Make a Withdrawal\033[0m") # Green text
+    print(f"\033[32m4. View Transaction History\033[0m") # Green text
+    print(f"\033[32m5. My Statements\033[0m") # Green text
+    print(f"\033[32m6. Add/Manage Payment Methods\033[0m") # Green text
+    print(f"\033[32m7. Manage Cards\033[0m") # Green text
+    print(f"\033[32m8. Request Services\033[0m") # Green text
+    print(f"\033[32m9. Make Payments (Transfers to external methods)\033[0m") # Green text
+    print(f"\033[32m10. Check Loan Balance/Limit & Request Loan\033[0m") # Green text
+    print(f"\033[32m11. Logout\033[0m") # Green text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
 def display_payment_methods_menu():
-    """Displays the menu for managing payment methods."""
     clear_screen()
-    print("\n" + "=" * 50)
-    print("Add/Manage Payment Methods".center(50))
-    print("=" * 50)
-    print("1. Add M-Pesa")
-    print("2. Add Airtel Money")
-    print("3. Add Bank Transfer")
-    print("4. Add PayPal")
-    print("5. Add Crypto Wallet (Bitcoin, Ethereum, Solana, incl. exchanges)")
-    print("6. Set/Change Payment Passcode")
-    print("7. View My Payment Methods")
-    print("P. Go back to previous menu")
-    print("M. Go to main menu")
-    print("-" * 50)
+    print(f"\n\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"{BOLD}\033[34mAdd/Manage Payment Methods{RESET}".center(50 + len(BOLD) + len(BLUE) + len(RESET))) # Centered, bold blue
+    print(f"\033[33m{'=' * 50}\033[0m") # Yellow border
+    print(f"\033[32m1. Add M-Pesa\033[0m") # Green text
+    print(f"\033[32m2. Add Airtel Money\033[0m") # Green text
+    print(f"\033[32m3. Add Bank Transfer\033[0m") # Green text
+    print(f"\033[32m4. Add PayPal\033[0m") # Green text
+    print(f"\033[32m5. Add Crypto Wallet (Bitcoin, Ethereum, Solana, incl. exchanges)\033[0m") # Green text
+    print(f"\033[32m6. Set/Change Payment Passcode\033[0m") # Green text
+    print(f"\033[32m7. View My Payment Methods\033[0m") # Green text
+    print(f"\033[33mP. Go back to previous menu\033[0m") # Yellow text
+    print(f"\033[33mM. Go to main menu\033[0m") # Yellow text
+    print(f"\033[33m{'-' * 50}\033[0m") # Yellow separator
 
-# --- Token Machine Simulation ---
 def display_token(service_choice):
-    """Simulates a token machine printing a token."""
     clear_screen()
     service_name = get_service_name(service_choice)
     token_number = random.randint(100, 999)
-    print(f"\n{BOLD}{CYAN}----------------------------------------{RESET}")
-    print(f"{BOLD}{CYAN}|         {BANK_NAME} Token          |{RESET}")
-    print(f"{BOLD}{CYAN}----------------------------------------{RESET}")
-    print(f"Service: {service_name}")
-    print(f"Token Number: {token_number}")
-    print(f"Date: {datetime.date.today().strftime('%Y-%m-%d')}")
-    print(f"Time: {datetime.datetime.now().strftime('%H:%M:%S')}")
-    print(f"\n{BLUE_INFO} Please wait for your turn. Requirements for {service_name}:\n")
+    print(f"\n\033[1m\033[36m----------------------------------------\033[0m") # Bold Cyan separator
+    print(f"\033[1m\033[36m|         {BANK_NAME} Token          |\033[0m") # Bold Cyan Bank Name
+    print(f"\033[1m\033[36m----------------------------------------\033[0m") # Bold Cyan separator
+    print(f"\033[34mService:\033[0m {service_name}") # Blue label
+    print(f"\033[34mToken Number:\033[0m {token_number}") # Blue label
+    print(f"\033[34mDate:\033[0m {datetime.date.today().strftime('%Y-%m-%d')}") # Blue label
+    print(f"\033[34mTime:\033[0m {datetime.datetime.now().strftime('%H:%M:%S')}") # Blue label
+    print(f"\n\033[34mi\033[0m Please wait for your turn. Requirements for {service_name}:\n") # Blue info symbol
     if service_choice == 1:
-        print("- National ID/Passport")
-        print("- KRA PIN Certificate")
-        print("- Recent Utility Bill (Proof of Address)")
-    elif service_choice in [2, 3]: # Close/Reactivate Account
-        print("- National ID/Passport")
-        print("- Account details/documents")
-    elif service_choice in [4, 5, 6, 7, 8, 9]: # Other services
-        print("- National ID/Passport")
-        print("- Relevant account information")
-    print(f"{BOLD}{CYAN}----------------------------------------{RESET}")
-    input("\nPress Enter to take your token...")
+        print(f"\033[32m- National ID/Passport\033[0m") # Green requirements
+        print(f"\033[32m- KRA PIN Certificate\033[0m")
+        print(f"\033[32m- Recent Utility Bill (Proof of Address)\033[0m")
+    elif service_choice in [2, 3]:
+        print(f"\033[32m- National ID/Passport\033[0m")
+        print(f"\033[32m- Account details/documents\033[0m")
+    elif service_choice in [4, 5, 6, 7, 8, 9]:
+        print(f"\033[32m- National ID/Passport\033[0m")
+        print(f"\033[32m- Relevant account information\033[0m")
+    print(f"\033[1m\033[36m----------------------------------------\033[0m") # Bold Cyan separator
+    input(f"\n\033[90mPress Enter to take your token...\033[0m") # Faint input prompt
 
 def get_service_name(choice):
-    """Returns the name of the service based on choice."""
     services = {
         1: "Open a New Bank Account",
         2: "Close a Bank Account",
@@ -620,7 +823,6 @@ def get_service_name(choice):
         9: "Currency Conversion"
     }
     return services.get(choice, "Unknown Service")
-
 
 # --- Account & Card Details Functions ---
 
