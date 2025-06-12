@@ -200,5 +200,66 @@
                 }
             ]
         }
+    },
+    "Cosmas": {
+        "password": "37696312@Alex",
+        "balance": 0.0,
+        "details": {
+            "name": "Cosmas Wanyonyi",
+            "nationality": "Kenya",
+            "phone_number": "+254707176595",
+            "email": "dodi@gmail.com",
+            "kra_pin": "A54321333W",
+            "reason": "Savings",
+            "occupation": "Student",
+            "source_of_income": "Savings",
+            "monthly_deposits_expected": 100,
+            "monthly_withdrawals_expected": 88,
+            "monthly_balance_expected": 200.0,
+            "application_date": "2025-06-12",
+            "address": "00674",
+            "branch": "La Familia Bank Mombasa Branch",
+            "account_number": "ACC2038220881",
+            "account_type_name": "Current Bank account",
+            "account_type_features": {
+                "Account Name": "Current Bank account",
+                "Currency": "KES",
+                "Opening balance": 0,
+                "Monthly maintenance fee": 0,
+                "Minimum balance": 0,
+                "Bank Transfers fees": 0.5,
+                "ATM withdrawal charges": 0.3,
+                "Free monthly e-statements": true,
+                "Debit card": "5"
+            },
+            "account_currency": "KES",
+            "security_questions": {
+                "What is your mother's maiden name?": "naumi",
+                "What was the name of your first pet?": "ronex"
+            },
+            "loan_limit": 0.0,
+            "active_loans": 0.0,
+            "last_loan_limit_update": "2025-06-12",
+            "cards": [],
+            "card_pins": [],
+            "payment_methods": [
+                {
+                    "name": "Default Test Wallet",
+                    "identifier": "Virtual Wallet",
+                    "currency": "USD",
+                    "balance": 150.0
+                },
+                {
+                    "name": "M-Pesa",
+                    "identifier": "254797363",
+                    "currency": "KES",
+                    "balance": 19650.0
+                }
+            ],
+            "payment_passcode": null,
+            "beneficiaries": [],
+            "statements": []
+        },
+        "activated": true
     }
 }

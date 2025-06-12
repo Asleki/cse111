@@ -285,3 +285,102 @@ Sincerely,
 The La Familia Bank Team.
 ------------------------------
 
+--- 2025-06-12 15:39:18 ---
+From: noreply@lafamiliabank.com
+To: dodi@gmail.com
+Subject: La Familia Bank OTP Verification
+Body:
+Dear Cosmas Wanyonyi,
+
+Your One-Time Passcode (OTP) for La Familia Bank is: [1m6140[0m
+
+This OTP is valid for 5 minutes and will expire at 15:44:18.
+Please do not share this code with anyone.
+
+Thank you,
+The La Familia Bank Team.
+------------------------------
+
+--- 2025-06-12 15:40:17 ---
+From: security@lafamiliabank.com
+To: dodi@gmail.com
+Subject: La Familia Bank Security Questions Setup Confirmation
+Body:
+Dear Cosmas Wanyonyi,
+
+This email confirms that you have successfully set up your security questions for your La Familia Bank account.
+Your chosen questions and answers (for your reference, do not share):
+- Question: What is your mother's maiden name?
+   Answer: naumi
+- Question: What was the name of your first pet?
+   Answer: ronex
+
+These questions will be used to verify your identity if you ever need to reset your password or perform sensitive account operations.
+
+If you did not make these changes, please contact us immediately.
+
+Sincerely,
+The La Familia Bank Security Team.
+------------------------------
+
+--- 2025-06-12 15:40:17 ---
+From: accounts@lafamiliabank.com
+To: dodi@gmail.com
+Subject: La Familia Bank Account Activated: Welcome!
+Body:
+Dear Cosmas,
+
+Congratulations! Your La Familia Bank account has been successfully created and activated.
+
+Account Details:
+   Account Number: ACC2038220881
+   Account Type: Current Bank account
+   Currency: KES
+   Branch: La Familia Bank Mombasa Branch
+
+You can now log in to your online banking portal to manage your finances, view statements, and explore our services.
+
+Welcome to the La Familia Bank family!
+
+Sincerely,
+The La Familia Bank Team.
+------------------------------
+
+--- 2025-06-12 15:59:58 ---
+From: support@lafamiliabank.com
+To: cosmas@gmail.com
+Subject: La Familia Bank Account Application Form
+Body:
+Dear Applicant,
+
+Thank you for your interest in opening an account with La Familia Bank.
+Attached to this email is your application form. Please download, fill it carefully, and scan the completed form back to us via email or visit your nearest branch.
+
+Required documents typically include:
+- Copy of National ID/Passport
+- KRA PIN Certificate
+- Proof of Address (e.g., utility bill)
+- Passport size photo
+
+We look forward to serving you!
+
+Sincerely,
+The La Familia Bank Team.
+------------------------------
+
+--- 2025-06-12 16:31:27 ---
+From: noreply@lafamiliabank.com
+To: wanyonyi@gmail.com
+Subject: La Familia Bank OTP Verification
+Body:
+Dear Dodi Cosmas,
+
+Your One-Time Passcode (OTP) for La Familia Bank is: [1m0360[0m
+
+This OTP is valid for 5 minutes and will expire at 16:36:27.
+Please do not share this code with anyone.
+
+Thank you,
+The La Familia Bank Team.
+------------------------------
+
